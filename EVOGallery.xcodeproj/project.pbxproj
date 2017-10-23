@@ -7,14 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C46ACA391F9E677000F68451 /* EVOGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */; };
+		C46ACA3A1F9E677000F68451 /* EVOGalleryFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA371F9E677000F68451 /* EVOGalleryFlowLayout.swift */; };
+		C46ACA3B1F9E677000F68451 /* EVOGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA381F9E677000F68451 /* EVOGalleryViewController.swift */; };
+		C46ACA3D1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA3C1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift */; };
+		C46ACA3F1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA3E1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift */; };
+		C4D7000D1F9B620700EB06DA /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFFF1F9B620700EB06DA /* FooterView.swift */; };
+		C4D7000F1F9B620700EB06DA /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D700011F9B620700EB06DA /* HeaderView.swift */; };
+		C4D7001B1F9B788100EB06DA /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7001A1F9B788100EB06DA /* TestCollectionViewCell.swift */; };
 		C4D7FFD81F9B609D00EB06DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFD71F9B609D00EB06DA /* AppDelegate.swift */; };
 		C4D7FFDA1F9B609D00EB06DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFD91F9B609D00EB06DA /* ViewController.swift */; };
 		C4D7FFDD1F9B609D00EB06DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4D7FFDB1F9B609D00EB06DA /* Main.storyboard */; };
 		C4D7FFDF1F9B609D00EB06DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4D7FFDE1F9B609D00EB06DA /* Assets.xcassets */; };
 		C4D7FFE21F9B609D00EB06DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4D7FFE01F9B609D00EB06DA /* LaunchScreen.storyboard */; };
+		C4D7FFF91F9B61B400EB06DA /* ImageLoaderDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF31F9B61B400EB06DA /* ImageLoaderDTO.swift */; };
+		C4D7FFFA1F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF41F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift */; };
+		C4D7FFFC1F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF61F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift */; };
+		C4D7FFFD1F9B61B400EB06DA /* ImageLoaderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF71F9B61B400EB06DA /* ImageLoaderCollectionView.swift */; };
+		C4D7FFFE1F9B61B400EB06DA /* AttachmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF81F9B61B400EB06DA /* AttachmentCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
+		C46ACA371F9E677000F68451 /* EVOGalleryFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryFlowLayout.swift; sourceTree = "<group>"; };
+		C46ACA381F9E677000F68451 /* EVOGalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryViewController.swift; sourceTree = "<group>"; };
+		C46ACA3C1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryImageScrollView.swift; sourceTree = "<group>"; };
+		C46ACA3E1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoGalleryCollectionViewController.swift; sourceTree = "<group>"; };
+		C4D700011F9B620700EB06DA /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		C4D7001A1F9B788100EB06DA /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
 		C4D7FFD41F9B609D00EB06DA /* EVOGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EVOGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D7FFD71F9B609D00EB06DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4D7FFD91F9B609D00EB06DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +42,12 @@
 		C4D7FFDE1F9B609D00EB06DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4D7FFE11F9B609D00EB06DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4D7FFE31F9B609D00EB06DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4D7FFF31F9B61B400EB06DA /* ImageLoaderDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoaderDTO.swift; sourceTree = "<group>"; };
+		C4D7FFF41F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		C4D7FFF61F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAttachmentCollectionViewCell.swift; sourceTree = "<group>"; };
+		C4D7FFF71F9B61B400EB06DA /* ImageLoaderCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoaderCollectionView.swift; sourceTree = "<group>"; };
+		C4D7FFF81F9B61B400EB06DA /* AttachmentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentCollectionViewCell.swift; sourceTree = "<group>"; };
+		C4D7FFFF1F9B620700EB06DA /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +80,59 @@
 		C4D7FFD61F9B609D00EB06DA /* EVOGallery */ = {
 			isa = PBXGroup;
 			children = (
+				C4D7FFEF1F9B618F00EB06DA /* EVOGallery */,
 				C4D7FFD71F9B609D00EB06DA /* AppDelegate.swift */,
+				C4D7FFFF1F9B620700EB06DA /* FooterView.swift */,
+				C4D700011F9B620700EB06DA /* HeaderView.swift */,
 				C4D7FFD91F9B609D00EB06DA /* ViewController.swift */,
 				C4D7FFDB1F9B609D00EB06DA /* Main.storyboard */,
 				C4D7FFDE1F9B609D00EB06DA /* Assets.xcassets */,
 				C4D7FFE01F9B609D00EB06DA /* LaunchScreen.storyboard */,
 				C4D7FFE31F9B609D00EB06DA /* Info.plist */,
+				C4D7001A1F9B788100EB06DA /* TestCollectionViewCell.swift */,
+				C46ACA3E1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift */,
 			);
 			path = EVOGallery;
+			sourceTree = "<group>";
+		};
+		C4D7FFEF1F9B618F00EB06DA /* EVOGallery */ = {
+			isa = PBXGroup;
+			children = (
+				C4D7FFF01F9B618F00EB06DA /* CollectionView */,
+				C4D7FFF11F9B618F00EB06DA /* Camera */,
+				C4D7FFF21F9B618F00EB06DA /* Gallery */,
+			);
+			path = EVOGallery;
+			sourceTree = "<group>";
+		};
+		C4D7FFF01F9B618F00EB06DA /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				C4D7FFF61F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift */,
+				C4D7FFF81F9B61B400EB06DA /* AttachmentCollectionViewCell.swift */,
+				C4D7FFF71F9B61B400EB06DA /* ImageLoaderCollectionView.swift */,
+				C4D7FFF41F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift */,
+				C4D7FFF31F9B61B400EB06DA /* ImageLoaderDTO.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		C4D7FFF11F9B618F00EB06DA /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		C4D7FFF21F9B618F00EB06DA /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				C46ACA3C1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift */,
+				C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */,
+				C46ACA371F9E677000F68451 /* EVOGalleryFlowLayout.swift */,
+				C46ACA381F9E677000F68451 /* EVOGalleryViewController.swift */,
+			);
+			path = Gallery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,8 +207,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4D7FFF91F9B61B400EB06DA /* ImageLoaderDTO.swift in Sources */,
+				C46ACA3D1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift in Sources */,
+				C4D7001B1F9B788100EB06DA /* TestCollectionViewCell.swift in Sources */,
+				C46ACA391F9E677000F68451 /* EVOGalleryCollectionViewCell.swift in Sources */,
+				C4D7FFFE1F9B61B400EB06DA /* AttachmentCollectionViewCell.swift in Sources */,
 				C4D7FFDA1F9B609D00EB06DA /* ViewController.swift in Sources */,
+				C46ACA3A1F9E677000F68451 /* EVOGalleryFlowLayout.swift in Sources */,
+				C46ACA3B1F9E677000F68451 /* EVOGalleryViewController.swift in Sources */,
+				C4D7000D1F9B620700EB06DA /* FooterView.swift in Sources */,
+				C4D7FFFD1F9B61B400EB06DA /* ImageLoaderCollectionView.swift in Sources */,
+				C46ACA3F1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift in Sources */,
 				C4D7FFD81F9B609D00EB06DA /* AppDelegate.swift in Sources */,
+				C4D7FFFC1F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift in Sources */,
+				C4D7000F1F9B620700EB06DA /* HeaderView.swift in Sources */,
+				C4D7FFFA1F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
