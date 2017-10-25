@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95BA2D7D1F9F7BBE00F8BDBE /* EVOCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BA2D7C1F9F7BBE00F8BDBE /* EVOCameraViewController.swift */; };
+		95BA2D7F1FA0B85500F8BDBE /* EVOCameraFocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BA2D7E1FA0B85500F8BDBE /* EVOCameraFocusView.swift */; };
 		C46ACA391F9E677000F68451 /* EVOGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */; };
 		C46ACA3A1F9E677000F68451 /* EVOGalleryFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA371F9E677000F68451 /* EVOGalleryFlowLayout.swift */; };
 		C46ACA3B1F9E677000F68451 /* EVOGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA381F9E677000F68451 /* EVOGalleryViewController.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		95BA2D7C1F9F7BBE00F8BDBE /* EVOCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCameraViewController.swift; sourceTree = "<group>"; };
+		95BA2D7E1FA0B85500F8BDBE /* EVOCameraFocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCameraFocusView.swift; sourceTree = "<group>"; };
 		C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		C46ACA371F9E677000F68451 /* EVOGalleryFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryFlowLayout.swift; sourceTree = "<group>"; };
 		C46ACA381F9E677000F68451 /* EVOGalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +65,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		95BA2D7B1F9F7BA800F8BDBE /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				95BA2D7C1F9F7BBE00F8BDBE /* EVOCameraViewController.swift */,
+				95BA2D7E1FA0B85500F8BDBE /* EVOCameraFocusView.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		C4D7FFCB1F9B609D00EB06DA = {
 			isa = PBXGroup;
 			children = (
@@ -98,8 +111,8 @@
 		C4D7FFEF1F9B618F00EB06DA /* EVOGallery */ = {
 			isa = PBXGroup;
 			children = (
+				95BA2D7B1F9F7BA800F8BDBE /* Camera */,
 				C4D7FFF01F9B618F00EB06DA /* CollectionView */,
-				C4D7FFF11F9B618F00EB06DA /* Camera */,
 				C4D7FFF21F9B618F00EB06DA /* Gallery */,
 			);
 			path = EVOGallery;
@@ -115,13 +128,6 @@
 				C4D7FFF31F9B61B400EB06DA /* ImageLoaderDTO.swift */,
 			);
 			path = CollectionView;
-			sourceTree = "<group>";
-		};
-		C4D7FFF11F9B618F00EB06DA /* Camera */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Camera;
 			sourceTree = "<group>";
 		};
 		C4D7FFF21F9B618F00EB06DA /* Gallery */ = {
@@ -207,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95BA2D7F1FA0B85500F8BDBE /* EVOCameraFocusView.swift in Sources */,
 				C4D7FFF91F9B61B400EB06DA /* ImageLoaderDTO.swift in Sources */,
 				C46ACA3D1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift in Sources */,
 				C4D7001B1F9B788100EB06DA /* TestCollectionViewCell.swift in Sources */,
@@ -217,6 +224,7 @@
 				C46ACA3B1F9E677000F68451 /* EVOGalleryViewController.swift in Sources */,
 				C4D7000D1F9B620700EB06DA /* FooterView.swift in Sources */,
 				C4D7FFFD1F9B61B400EB06DA /* ImageLoaderCollectionView.swift in Sources */,
+				95BA2D7D1F9F7BBE00F8BDBE /* EVOCameraViewController.swift in Sources */,
 				C46ACA3F1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift in Sources */,
 				C4D7FFD81F9B609D00EB06DA /* AppDelegate.swift in Sources */,
 				C4D7FFFC1F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift in Sources */,
@@ -359,6 +367,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 29HPKUAB44;
 				INFOPLIST_FILE = EVOGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kostilal.EVOGallery;
@@ -373,6 +382,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 29HPKUAB44;
 				INFOPLIST_FILE = EVOGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kostilal.EVOGallery;

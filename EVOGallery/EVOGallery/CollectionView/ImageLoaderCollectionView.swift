@@ -228,7 +228,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
     }
     
     func addImage() {
-        guard let image = UIImage(named: "test") else {
+        guard let image = UIImage(named: "test_0") else {
             return
         }
         

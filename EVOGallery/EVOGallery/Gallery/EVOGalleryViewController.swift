@@ -24,7 +24,7 @@ class EVOGalleryViewController: UICollectionViewController {
     public var footerView: UIView?
     public weak var delegate: EVOGalleryViewControllerDelegate?
     
-    init(with dataSource: [UIImage], selectedIndex: Int, collectionViewLayout: UICollectionViewFlowLayout?) {
+    required init(with dataSource: [UIImage], selectedIndex: Int, collectionViewLayout: UICollectionViewFlowLayout?) {
         var layout: UICollectionViewFlowLayout
         
         if let collectionViewLayout = collectionViewLayout {
@@ -49,13 +49,13 @@ class EVOGalleryViewController: UICollectionViewController {
         self.collectionView?.isPagingEnabled = true
         
         setupOverlays()
-        self.delegate?.galleryDidChangeIndex(to: self.currentIndex, galleryViewController: self)
+        reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.collectionView?.scrollToItem(at: IndexPath(item: self.currentIndex, section: 0), at: .centeredHorizontally, animated: false)
+        scroll(to: self.currentIndex)
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,7 +63,7 @@ class EVOGalleryViewController: UICollectionViewController {
     }
     
     // MARK: Setups
-    func setupOverlays() {
+    public func setupOverlays() {
         if let header = self.headerView {
             header.frame = CGRect(x: 0,
                                   y: 0,
@@ -80,7 +80,31 @@ class EVOGalleryViewController: UICollectionViewController {
             self.view.addSubview(footer)
         }
     }
-
+    
+    // MARK: Actions
+    public func scroll(to index: Int) {
+        if index >= 0 && index <= self.dataSource.count-1 {
+            self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+        }
+    }
+    
+    public func reloadData() {
+        self.collectionView?.reloadData()
+        self.delegate?.galleryDidChangeIndex(to: self.currentIndex, galleryViewController: self)
+    }
+    
+    fileprivate func calculateCurrentIndex(with scrollView: UIScrollView) {
+        var visibleRect = CGRect()
+        visibleRect.origin = collectionView!.contentOffset
+        visibleRect.size = collectionView!.bounds.size
+        
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        let visibleIndexPath: IndexPath = collectionView!.indexPathForItem(at: visiblePoint)!
+        
+        self.currentIndex = visibleIndexPath.row
+        self.delegate?.galleryDidChangeIndex(to: self.currentIndex, galleryViewController: self)
+    }
+    
     // MARK: UICollectionViewDataSource
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -102,14 +126,10 @@ class EVOGalleryViewController: UICollectionViewController {
 
     // MARK: UIScrollViewDelegate
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        var visibleRect = CGRect()
-        visibleRect.origin = collectionView!.contentOffset
-        visibleRect.size = collectionView!.bounds.size
-        
-        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-        let visibleIndexPath: IndexPath = collectionView!.indexPathForItem(at: visiblePoint)!
-        
-        self.currentIndex = visibleIndexPath.row
-        self.delegate?.galleryDidChangeIndex(to: self.currentIndex, galleryViewController: self)
+            calculateCurrentIndex(with: scrollView)
+    }
+
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        calculateCurrentIndex(with: scrollView)
     }
 }

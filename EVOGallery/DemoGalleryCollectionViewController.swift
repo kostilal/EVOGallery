@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol DemoGalleryCollectionViewControllerDelegate: EVOGalleryViewControllerDelegate {
-    
-}
-
 class DemoGalleryCollectionViewController: EVOGalleryViewController, HeaderViewDelegate, FooterViewDelegate, EVOGalleryViewControllerDelegate {
 
     override func viewDidLoad() {
@@ -53,20 +49,15 @@ class DemoGalleryCollectionViewController: EVOGalleryViewController, HeaderViewD
     
     // MARK: FooterViewDelegate
     func footerView(_ footerView: FooterView, didPressEditButton button: UIButton) {
+        let cameraVC = EVOCameraViewController()
         
+        present(cameraVC, animated: true, completion: nil)
     }
     
     func footerView(_ footerView: FooterView, didPressDeleteButton button: UIButton) {
-        
-        if self.currentIndex < self.dataSource.count {
+        if self.currentIndex <= self.dataSource.count-1 {
             self.dataSource.remove(at: self.currentIndex)
         }
-        
-        
-        
-        
-        print("DataSource : \(self.dataSource.count) | index : \(self.currentIndex)")
-        
         
         if self.dataSource.isEmpty {
             headerViewDidPressBackButton(nil)
@@ -74,7 +65,9 @@ class DemoGalleryCollectionViewController: EVOGalleryViewController, HeaderViewD
             return
         }
         
-        self.collectionView?.reloadData()
+        self.scroll(to: 0)
+        
+        self.reloadData()
     }
     
     // MARK: EVOGalleryViewControllerDelegate
