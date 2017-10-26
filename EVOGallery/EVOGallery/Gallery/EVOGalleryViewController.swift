@@ -15,8 +15,8 @@ protocol EVOGalleryViewControllerDelegate: class {
 private let reuseIdentifier = "EVOGalleryCollectionViewCell"
 
 class EVOGalleryViewController: UICollectionViewController {
-    fileprivate static let headerHeight = CGFloat(64)
-    fileprivate static let footerHeight = CGFloat(50)
+    public var headerHeight = CGFloat(64)
+    public var footerHeight = CGFloat(50)
     
     public var currentIndex = 0
     public var dataSource = [UIImage]()
@@ -52,6 +52,24 @@ class EVOGalleryViewController: UICollectionViewController {
         reloadData()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if let header = self.headerView {
+            header.frame = CGRect(x: 0,
+                                  y: 0,
+                                  width: self.view.frame.size.width,
+                                  height: self.headerHeight)
+        }
+        
+        if let footer = self.footerView {
+            footer.frame = CGRect(x: 0,
+                                  y: self.view.frame.size.height - self.footerHeight,
+                                  width: self.view.frame.size.width,
+                                  height: self.footerHeight)
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -65,18 +83,10 @@ class EVOGalleryViewController: UICollectionViewController {
     // MARK: Setups
     public func setupOverlays() {
         if let header = self.headerView {
-            header.frame = CGRect(x: 0,
-                                  y: 0,
-                                  width: self.view.frame.size.width,
-                                  height: EVOGalleryViewController.headerHeight)
             self.view.addSubview(header)
         }
         
         if let footer = self.footerView {
-            footer.frame = CGRect(x: 0,
-                                  y: self.view.frame.size.height - EVOGalleryViewController.footerHeight,
-                                  width: self.view.frame.size.width,
-                                  height: EVOGalleryViewController.footerHeight)
             self.view.addSubview(footer)
         }
     }

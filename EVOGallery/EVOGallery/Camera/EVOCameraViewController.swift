@@ -9,32 +9,49 @@
 import UIKit
 import AVFoundation
 
-enum CameraFlashState: Int {
-    case auto
-    case on
-    case off
+enum CameraFlashState: String {
+    case auto = "stateAuto"
+    case on = "stateOn"
+    case off = "stateOff"
 }
 
-class EVOCameraViewController: UIViewController {
-    public var headerView: UIView?
-    public var footerView: UIView?
+class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCameraHeaderProtocol {
+    
+    public var overlaysStyle = EVOCameraOverlaysStyle()
+    public var headerView: EVOCameraHeaderView?
+    public var footerView: EVOCameraFooterView?
     public let cameraFocusView = EVOCameraFocusView()
     
     fileprivate let captureSession = AVCaptureSession()
     fileprivate var captureInput: AVCaptureDeviceInput?
     fileprivate let captureOutput = AVCapturePhotoOutput()
     fileprivate var capturePreview: AVCaptureVideoPreviewLayer?
-    fileprivate var flashState: CameraFlashState = .auto
+    fileprivate var flashState: CameraFlashState = .off
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCamera()
         setupFocusView()
+        setupOverlays()
     }
     
     override func viewDidLayoutSubviews() {
         self.cameraFocusView.frame = self.view.bounds
+        
+        if let header = self.headerView {
+            header.frame = CGRect(x: 0,
+                                  y: 0,
+                                  width: self.overlaysStyle.headerSize.width,
+                                  height: self.overlaysStyle.headerSize.height)
+        }
+        
+        if let footer = self.footerView  {
+            footer.frame = CGRect(x: 0,
+                                  y: self.view.bounds.height - self.overlaysStyle.footerSize.height,
+                                  width: self.overlaysStyle.footerSize.width,
+                                  height: self.overlaysStyle.footerSize.height)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +60,6 @@ class EVOCameraViewController: UIViewController {
     
     // MARK: Setups
     fileprivate func setupFocusView() {
-        
         self.view.addSubview(self.cameraFocusView)
         self.cameraFocusView.bringSubview(toFront: self.view)
     }
@@ -86,6 +102,16 @@ class EVOCameraViewController: UIViewController {
         startCaptureSession()
     }
     
+    func setupOverlays() {
+        self.headerView = EVOCameraHeaderView(with: self.overlaysStyle)
+        self.headerView?.headerDelegate = self
+        self.cameraFocusView.addSubview(self.headerView!)
+        
+        self.footerView = EVOCameraFooterView(with: self.overlaysStyle)
+        self.footerView?.footerDelegate = self
+        self.cameraFocusView.addSubview(self.footerView!)
+    }
+    
     fileprivate func getDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: position)
         
@@ -125,5 +151,64 @@ class EVOCameraViewController: UIViewController {
         } catch {
             log(with: "Can't lock the device")
         }
+    }
+    
+    private func changeFlashState() {
+        guard let device = getDevice(with: .back)  else {
+            log(with: "No device found")
+            
+            return
+        }
+        
+        if device.hasTorch {
+            do {
+                try device.lockForConfiguration()
+                
+                switch self.flashState {
+                case .auto:
+                    device.torchMode = AVCaptureDevice.TorchMode.on
+                    self.flashState = .on
+                    break
+                case .on:
+                    device.torchMode = AVCaptureDevice.TorchMode.off
+                    self.flashState = .off
+                    break
+                case .off:
+                    device.torchMode = AVCaptureDevice.TorchMode.auto
+                    self.flashState = .auto
+                    break
+                }
+                
+                self.headerView?.changeFlashImage(with: self.flashState)
+                
+                device.unlockForConfiguration()
+            } catch {
+                print(error)
+            }
+        }
+
+    }
+    
+    // MARK: EVOCameraHeaderProtocol
+    func closeButtonPressed() {
+        stopCaptureSession()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func flashButtonPressed() {
+        changeFlashState()
+    }
+    
+    func switchCameraButtonPressed() {
+        
+    }
+    
+    // MARK: EVOCameraFooterProtocol
+    func galleryButtonPressed() {
+        
+    }
+    
+    func captureButtonPressed() {
+        
     }
 }

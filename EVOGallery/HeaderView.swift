@@ -7,12 +7,12 @@ protocol HeaderViewDelegate: class {
 
 class HeaderView: UIView {
     weak var viewDelegate: HeaderViewDelegate?
-    static let ButtonSize = CGFloat(50.0)
-    static let TitileSize = CGSize(width: 150, height: 30)
-    static let TopMargin = CGFloat(15.0)
+    static let buttonSize = CGFloat(50.0)
+    static let titleSize = CGSize(width: 150, height: 30)
+    static let topMargin = CGFloat(15.0)
 
     lazy var backButton: UIButton = {
-        let image = UIImage(named: "icArrowNext")!
+        let image = UIImage(named: "back")!
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
@@ -22,7 +22,7 @@ class HeaderView: UIView {
     }()
 
     lazy var shareButton: UIButton = {
-        let image = UIImage(named: "icExit")!
+        let image = UIImage(named: "share")!
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(shareButtonPressed), for: .touchUpInside)
@@ -33,7 +33,7 @@ class HeaderView: UIView {
     
     public lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "YOBA"
+        label.text = ""
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .white
         label.textAlignment = .center
@@ -65,12 +65,12 @@ class HeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.backButton.frame = CGRect(x: 0, y: HeaderView.TopMargin, width: HeaderView.ButtonSize, height: HeaderView.ButtonSize)
+        self.backButton.frame = CGRect(x: 0, y: HeaderView.topMargin, width: HeaderView.buttonSize, height: HeaderView.buttonSize)
 
-        let x = UIScreen.main.bounds.size.width - HeaderView.ButtonSize
-        self.shareButton.frame = CGRect(x: x, y: HeaderView.TopMargin, width: HeaderView.ButtonSize, height: HeaderView.ButtonSize)
+        let x = UIScreen.main.bounds.size.width - HeaderView.buttonSize
+        self.shareButton.frame = CGRect(x: x, y: HeaderView.topMargin, width: HeaderView.buttonSize, height: HeaderView.buttonSize)
         
-        self.titleLabel.frame = CGRect(x: self.frame.size.width / 2 - HeaderView.TitileSize.width / 2, y: (self.frame.size.height / 2 - HeaderView.TitileSize.height / 2) + 10 , width: HeaderView.TitileSize.width, height: HeaderView.TitileSize.height)
+        self.titleLabel.frame = CGRect(x: self.frame.size.width / 2 - HeaderView.titleSize.width / 2, y: (self.frame.size.height / 2 - HeaderView.titleSize.height / 2) + 10 , width: HeaderView.titleSize.width, height: HeaderView.titleSize.height)
         
         self.navigationView.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
     }

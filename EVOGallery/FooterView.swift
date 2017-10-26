@@ -10,7 +10,7 @@ class FooterView: UIView {
     static let ButtonSize = CGFloat(50.0)
 
     lazy var editButton: UIButton = {
-        let image = UIImage(named: "icEdit")!
+        let image = UIImage(named: "edit")!
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)
         button.tintColor = .white
@@ -24,7 +24,7 @@ class FooterView: UIView {
     }()
 
     lazy var deleteButton: UIButton = {
-        let image = UIImage(named: "icDel")!
+        let image = UIImage(named: "delete")!
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)
         button.tintColor = .white
