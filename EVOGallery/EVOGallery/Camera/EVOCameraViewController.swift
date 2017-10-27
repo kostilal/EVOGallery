@@ -29,9 +29,9 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     public let cameraFocusView = EVOCameraFocusView()
     public var previewImageView = UIImageView()
     
-    fileprivate var captureSession  = AVCaptureSession()
+    fileprivate var captureSession: AVCaptureSession?
     fileprivate var captureInput: AVCaptureDeviceInput?
-    fileprivate var captureOutput = AVCapturePhotoOutput()
+    fileprivate var captureOutput: AVCapturePhotoOutput?
     fileprivate var capturePreview: AVCaptureVideoPreviewLayer?
     fileprivate var flashState: FlashState = .auto
     fileprivate var setupState: SessionSetupState = .success
@@ -127,36 +127,36 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
         self.captureSession = AVCaptureSession()
         self.captureOutput = AVCapturePhotoOutput()
 
-        self.captureSession.beginConfiguration()
-        self.captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        self.captureSession!.beginConfiguration()
+        self.captureSession!.sessionPreset = AVCaptureSession.Preset.photo
         
         do {
             try self.captureInput = AVCaptureDeviceInput(device: device)
             
-            if self.captureSession.canAddInput(self.captureInput!) {
-                self.captureSession.addInput(self.captureInput!)
+            if self.captureSession!.canAddInput(self.captureInput!) {
+                self.captureSession!.addInput(self.captureInput!)
             } else {
                 log(with: "Can't add capture input")
                 self.setupState = .configurationFailed
-                self.captureSession.commitConfiguration()
+                self.captureSession!.commitConfiguration()
             }
         } catch {
             log(with: error.localizedDescription)
             self.setupState = .configurationFailed
-            self.captureSession.commitConfiguration()
+            self.captureSession!.commitConfiguration()
         }
         
-        if self.captureSession.canAddOutput(self.captureOutput) {
-            self.captureSession.addOutput(self.captureOutput)
+        if self.captureSession!.canAddOutput(self.captureOutput!) {
+            self.captureSession!.addOutput(self.captureOutput!)
             
-            self.captureOutput.isHighResolutionCaptureEnabled = true
+            self.captureOutput!.isHighResolutionCaptureEnabled = true
         } else {
             log(with: "Can't add capture output")
             self.setupState = .configurationFailed
-            self.captureSession.commitConfiguration()
+            self.captureSession!.commitConfiguration()
         }
         
-        self.captureSession.commitConfiguration()
+        self.captureSession!.commitConfiguration()
     }
     
     func setupPreviewLayer() {
@@ -164,7 +164,7 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
             case .success:
                     self.capturePreview?.removeFromSuperlayer()
                 
-                    self.capturePreview = AVCaptureVideoPreviewLayer(session: self.captureSession)
+                    self.capturePreview = AVCaptureVideoPreviewLayer(session: self.captureSession!)
                     self.capturePreview!.videoGravity = AVLayerVideoGravity.resizeAspectFill
                     self.capturePreview!.frame = self.view.bounds
                     self.view.layer.addSublayer(self.capturePreview!)
@@ -230,14 +230,14 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     
     // MARK: Actions
     fileprivate func startCaptureSession() {
-        if (!self.captureSession.isRunning) {
-            self.captureSession.startRunning()
+        if (!self.captureSession!.isRunning) {
+            self.captureSession!.startRunning()
         }
     }
     
     fileprivate func stopCaptureSession() {
-        if (self.captureSession.isRunning) {
-            self.captureSession.stopRunning()
+        if (self.captureSession!.isRunning) {
+            self.captureSession!.stopRunning()
         }
     }
     
@@ -307,13 +307,10 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     fileprivate func capturePhoto() {
         let photoSettings = AVCapturePhotoSettings()
 
-        if self.captureInput!.device.isFlashAvailable {
-            photoSettings.flashMode = .auto
-        }
         if !photoSettings.availablePreviewPhotoPixelFormatTypes.isEmpty {
             photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoSettings.availablePreviewPhotoPixelFormatTypes.first!]
         }
-        self.captureOutput.capturePhoto(with: photoSettings, delegate: self)
+        self.captureOutput!.capturePhoto(with: photoSettings, delegate: self)
     }
     
 //    @available (iOS 11.0, *)
