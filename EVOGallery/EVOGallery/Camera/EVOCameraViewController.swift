@@ -9,31 +9,57 @@
 import UIKit
 import AVFoundation
 
-enum CameraFlashState: String {
+enum FlashState: String {
     case auto = "stateAuto"
     case on = "stateOn"
     case off = "stateOff"
 }
 
-class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCameraHeaderProtocol {
+enum SessionSetupState {
+    case success
+    case notAuthorized
+    case configurationFailed
+}
+
+class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCameraHeaderProtocol, AVCapturePhotoCaptureDelegate {
     
     public var overlaysStyle = EVOCameraOverlaysStyle()
     public var headerView: EVOCameraHeaderView?
     public var footerView: EVOCameraFooterView?
     public let cameraFocusView = EVOCameraFocusView()
+    public var previewImageView = UIImageView()
     
     fileprivate let captureSession = AVCaptureSession()
     fileprivate var captureInput: AVCaptureDeviceInput?
     fileprivate let captureOutput = AVCapturePhotoOutput()
     fileprivate var capturePreview: AVCaptureVideoPreviewLayer?
-    fileprivate var flashState: CameraFlashState = .off
+    fileprivate var flashState: FlashState = .auto
+    fileprivate var setupState: SessionSetupState = .success
+    fileprivate let captureDevicePosition = AVCaptureDevice.Position.back
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkAutorizationStatus()
         
-        setupCamera()
+        setupSession()
+        setupPreviewLayer()
         setupFocusView()
         setupOverlays()
+        setupGestureRecognizers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if self.setupState == .success {
+            self.startCaptureSession()
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        if self.setupState == .success {
+            self.stopCaptureSession()
+        }
+    
+        super.viewWillDisappear(animated)
     }
     
     override func viewDidLayoutSubviews() {
@@ -52,6 +78,8 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
                                   width: self.overlaysStyle.footerSize.width,
                                   height: self.overlaysStyle.footerSize.height)
         }
+        
+        self.previewImageView.frame = self.cameraFocusView.frame
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,47 +87,113 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     }
     
     // MARK: Setups
+    fileprivate func checkAutorizationStatus() {
+        let autorizationStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        switch autorizationStatus {
+        case .authorized:
+            // The user has previously granted access to the camera.
+            break
+            
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { [unowned self] granted in
+                if !granted {
+                    self.setupState = .notAuthorized
+                }
+            })
+        default:
+            self.setupState = .notAuthorized
+        }
+    }
+    
+    func setupGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handle))
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
     fileprivate func setupFocusView() {
         self.view.addSubview(self.cameraFocusView)
         self.cameraFocusView.bringSubview(toFront: self.view)
     }
     
-    fileprivate func setupCamera() {
-        guard let device = getDevice(with: .back)  else {
+    fileprivate func setupSession() {
+        guard let device = getDevice(with: self.captureDevicePosition)  else {
             log(with: "No device found")
-            
             return
         }
+
+        self.captureSession.beginConfiguration()
+        self.captureSession.sessionPreset = AVCaptureSession.Preset.photo
         
         do {
             try self.captureInput = AVCaptureDeviceInput(device: device)
+            
+            if self.captureSession.canAddInput(self.captureInput!) {
+                self.captureSession.addInput(self.captureInput!)
+            } else {
+                log(with: "Can't add capture input")
+                self.setupState = .configurationFailed
+                self.captureSession.commitConfiguration()
+            }
         } catch {
             log(with: error.localizedDescription)
+            self.setupState = .configurationFailed
+            self.captureSession.commitConfiguration()
         }
         
-        self.captureSession.sessionPreset = AVCaptureSession.Preset.photo
-        
-        if self.captureSession.canAddInput(self.captureInput!) {
-            self.captureSession.addInput(self.captureInput!)
+        if self.captureSession.canAddOutput(self.captureOutput) {
+            self.captureSession.addOutput(self.captureOutput)
             
-            if self.captureSession.canAddOutput(self.captureOutput) {
-                self.captureSession.addOutput(self.captureOutput)
-                
-                self.capturePreview = AVCaptureVideoPreviewLayer(session: self.captureSession)
-                self.capturePreview!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                self.capturePreview!.frame = self.view.bounds
-                self.view.layer.addSublayer(self.capturePreview!)
-            } else {
-                log(with: "Can't add capture output")
-            }
+            self.captureOutput.isHighResolutionCaptureEnabled = true
         } else {
-            log(with: "Can't add capture input")
+            log(with: "Can't add capture output")
+            self.setupState = .configurationFailed
+            self.captureSession.commitConfiguration()
         }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handle))
-        self.view.addGestureRecognizer(tapGestureRecognizer)
-        
-        startCaptureSession()
+        self.captureSession.commitConfiguration()
+    }
+    
+    func setupPreviewLayer() {
+            switch self.setupState {
+            case .success:
+                    self.capturePreview = AVCaptureVideoPreviewLayer(session: self.captureSession)
+                    self.capturePreview!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                    self.capturePreview!.frame = self.view.bounds
+                    self.view.layer.addSublayer(self.capturePreview!)
+                
+            case .notAuthorized:
+                
+                    let changePrivacySetting = "AVCam doesn't have permission to use the camera, please change privacy settings"
+                    let message = NSLocalizedString(changePrivacySetting, comment: "Alert message when the user has denied access to the camera")
+                    let alertController = UIAlertController(title: "AVCam", message: message, preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"),
+                                                            style: .cancel,
+                                                            handler: nil))
+                    
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: "Alert button to open Settings"),
+                                                            style: .`default`,
+                                                            handler: { _ in
+                                                                UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+                    }))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                
+                
+            case .configurationFailed:
+                
+                    let alertMsg = "Alert message when something goes wrong during capture session configuration"
+                    let message = NSLocalizedString("Unable to capture media", comment: alertMsg)
+                    let alertController = UIAlertController(title: "AVCam", message: message, preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"),
+                                                            style: .cancel,
+                                                            handler: nil))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                
+            }
     }
     
     func setupOverlays() {
@@ -110,34 +204,46 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
         self.footerView = EVOCameraFooterView(with: self.overlaysStyle)
         self.footerView?.footerDelegate = self
         self.cameraFocusView.addSubview(self.footerView!)
+        
+        self.cameraFocusView.addSubview(self.previewImageView)
+        self.previewImageView.isHidden = true
     }
     
     fileprivate func getDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
-        let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: position)
+        var device: AVCaptureDevice?
+        
+        if let dualCameraDevice = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInDualCamera, for: AVMediaType.video, position: position) {
+            device = dualCameraDevice
+        } else if let wideCameraDevice = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: position) {
+            device = wideCameraDevice
+        }
         
         return device
     }
     
     // MARK: Actions
-    open func startCaptureSession() {
-        self.captureSession.startRunning()
+    fileprivate func startCaptureSession() {
+        if (!self.captureSession.isRunning) {
+            self.captureSession.startRunning()
+        }
     }
     
-    open func stopCaptureSession() {
-        self.captureSession.stopRunning()
+    fileprivate func stopCaptureSession() {
+        if (self.captureSession.isRunning) {
+            self.captureSession.stopRunning()
+        }
     }
     
     fileprivate func log(with text: String) {
         print(text)
     }
     
-    @objc func handle(tapGesture: UITapGestureRecognizer) {
+    @objc fileprivate func handle(tapGesture: UITapGestureRecognizer) {
         let tapPoint = tapGesture.location(in: self.cameraFocusView)
         let focusPoint = CGPoint(x: tapPoint.x / self.view.bounds.size.width, y: tapPoint.y / self.view.bounds.size.height)
         
         guard let device = self.captureInput?.device else {
             log(with: "No device found")
-            
             return
         }
         
@@ -153,10 +259,9 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
         }
     }
     
-    private func changeFlashState() {
-        guard let device = getDevice(with: .back)  else {
+    fileprivate func changeFlashState() {
+        guard let device = getDevice(with: self.captureDevicePosition)  else {
             log(with: "No device found")
-            
             return
         }
         
@@ -186,7 +291,49 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
                 print(error)
             }
         }
+    }
+    
+    fileprivate func capturePhoto() {
+        let photoSettings = AVCapturePhotoSettings()
 
+        if self.captureInput!.device.isFlashAvailable {
+            photoSettings.flashMode = .auto
+        }
+        if !photoSettings.availablePreviewPhotoPixelFormatTypes.isEmpty {
+            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoSettings.availablePreviewPhotoPixelFormatTypes.first!]
+        }
+        self.captureOutput.capturePhoto(with: photoSettings, delegate: self)
+    }
+    
+//    @available (iOS 11.0, *)
+//    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+//        let imageData = photo.fileDataRepresentation()
+//
+//        if let data = imageData as CFData? {
+//            let dataProvider = CGDataProvider(data: data)
+//            let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.absoluteColorimetric)
+//            let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
+//
+//            self.previewImageView.isHidden = false
+//            self.previewImageView.contentMode = .scaleAspectFill
+//            self.previewImageView.image = image
+//        }
+//    }
+
+    func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+        
+        if let error = error {
+            log(with: error.localizedDescription)
+        } else {
+            if let sampleBuffer = photoSampleBuffer, let previewBuffer = previewPhotoSampleBuffer, let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
+                
+                if let image = UIImage(data: dataImage) {
+                    self.previewImageView.isHidden = false
+                    self.previewImageView.contentMode = .scaleAspectFill
+                    self.previewImageView.image = image
+                }
+            }
+        }
     }
     
     // MARK: EVOCameraHeaderProtocol
@@ -209,6 +356,6 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     }
     
     func captureButtonPressed() {
-        
+        capturePhoto()
     }
 }

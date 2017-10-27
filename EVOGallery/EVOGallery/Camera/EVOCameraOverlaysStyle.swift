@@ -44,9 +44,9 @@ final class EVOCameraOverlaysStyle: NSObject {
         self.applyButtonImage = createImage(named: "apply")
         self.rotateButtonImage = createImage(named: "rotate")
         self.cropButtonImage = createImage(named: "crop")
-        self.flashButtonImages = [CameraFlashState.auto.rawValue: createImage(named: "flash_auto"),
-                                  CameraFlashState.on.rawValue  : createImage(named: "flash_on"),
-                                  CameraFlashState.off.rawValue : createImage(named: "flash_off")]
+        self.flashButtonImages = [FlashState.auto.rawValue: createImage(named: "flash_auto"),
+                                  FlashState.on.rawValue  : createImage(named: "flash_on"),
+                                  FlashState.off.rawValue : createImage(named: "flash_off")]
         
         self.controlButtonsTintColor = .white
         self.captureButtonTintColor = UIColor(red: 81/255, green: 73/255, blue: 157/255, alpha: 1)

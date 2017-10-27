@@ -40,7 +40,7 @@ class EVOCameraHeaderView: UIView {
     
     lazy var flashButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(self.overlayStyle.flashButtonImages[CameraFlashState.auto.rawValue], for: .normal)
+        button.setImage(self.overlayStyle.flashButtonImages[FlashState.auto.rawValue], for: .normal)
         button.addTarget(self, action: #selector(flashButtonPressed), for: .touchUpInside)
         button.tintColor = self.overlayStyle.controlButtonsTintColor
         
@@ -106,7 +106,7 @@ class EVOCameraHeaderView: UIView {
                                            height: self.overlayStyle.headerSize.height)
     }
     
-    public func changeFlashImage(with state: CameraFlashState) {
+    public func changeFlashImage(with state: FlashState) {
         self.flashButton.setImage(self.overlayStyle.flashButtonImages[state.rawValue], for: .normal)
     }
     
