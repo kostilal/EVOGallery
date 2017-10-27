@@ -29,13 +29,13 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     public let cameraFocusView = EVOCameraFocusView()
     public var previewImageView = UIImageView()
     
-    fileprivate let captureSession = AVCaptureSession()
+    fileprivate var captureSession  = AVCaptureSession()
     fileprivate var captureInput: AVCaptureDeviceInput?
-    fileprivate let captureOutput = AVCapturePhotoOutput()
+    fileprivate var captureOutput = AVCapturePhotoOutput()
     fileprivate var capturePreview: AVCaptureVideoPreviewLayer?
     fileprivate var flashState: FlashState = .auto
     fileprivate var setupState: SessionSetupState = .success
-    fileprivate let captureDevicePosition = AVCaptureDevice.Position.back
+    fileprivate var captureDevicePosition = AVCaptureDevice.Position.back
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +112,8 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     }
     
     fileprivate func setupFocusView() {
+        self.cameraFocusView.removeFromSuperview()
+        
         self.view.addSubview(self.cameraFocusView)
         self.cameraFocusView.bringSubview(toFront: self.view)
     }
@@ -121,6 +123,9 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
             log(with: "No device found")
             return
         }
+        
+        self.captureSession = AVCaptureSession()
+        self.captureOutput = AVCapturePhotoOutput()
 
         self.captureSession.beginConfiguration()
         self.captureSession.sessionPreset = AVCaptureSession.Preset.photo
@@ -157,6 +162,8 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     func setupPreviewLayer() {
             switch self.setupState {
             case .success:
+                    self.capturePreview?.removeFromSuperlayer()
+                
                     self.capturePreview = AVCaptureVideoPreviewLayer(session: self.captureSession)
                     self.capturePreview!.videoGravity = AVLayerVideoGravity.resizeAspectFill
                     self.capturePreview!.frame = self.view.bounds
@@ -247,15 +254,19 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
             return
         }
         
-        do {
-            try device.lockForConfiguration()
-            device.focusPointOfInterest = focusPoint
-            device.focusMode = .autoFocus
-            device.unlockForConfiguration()
-            
-            self.cameraFocusView.setFocus(point: tapPoint)
-        } catch {
-            log(with: "Can't lock the device")
+        if device.isFocusPointOfInterestSupported {
+            do {
+                try device.lockForConfiguration()
+                device.focusPointOfInterest = focusPoint
+                device.focusMode = .autoFocus
+                device.unlockForConfiguration()
+                
+                self.cameraFocusView.setFocus(point: tapPoint)
+            } catch {
+                log(with: "Can't lock the device")
+            }
+        } else {
+            log(with: "Focus not suported on the device")
         }
     }
     
@@ -347,7 +358,13 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     }
     
     func switchCameraButtonPressed() {
+        self.captureDevicePosition = self.captureDevicePosition == .back ? .front : .back
         
+        stopCaptureSession()
+        setupSession()
+        setupPreviewLayer()
+        setupFocusView()
+        startCaptureSession()
     }
     
     // MARK: EVOCameraFooterProtocol
