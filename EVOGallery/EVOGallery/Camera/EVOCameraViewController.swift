@@ -21,13 +21,12 @@ enum SessionSetupState {
     case configurationFailed
 }
 
-class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCameraHeaderProtocol, AVCapturePhotoCaptureDelegate {
+class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCameraHeaderProtocol, AVCapturePhotoCaptureDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     public var overlaysStyle = EVOCameraOverlaysStyle()
     public var headerView: EVOCameraHeaderView?
     public var footerView: EVOCameraFooterView?
     public let cameraFocusView = EVOCameraFocusView()
-    public var previewImageView = UIImageView()
     
     fileprivate var captureSession: AVCaptureSession?
     fileprivate var captureInput: AVCaptureDeviceInput?
@@ -78,8 +77,6 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
                                   width: self.overlaysStyle.footerSize.width,
                                   height: self.overlaysStyle.footerSize.height)
         }
-        
-        self.previewImageView.frame = self.cameraFocusView.frame
     }
 
     override func didReceiveMemoryWarning() {
@@ -211,9 +208,6 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
         self.footerView = EVOCameraFooterView(with: self.overlaysStyle)
         self.footerView?.footerDelegate = self
         self.cameraFocusView.addSubview(self.footerView!)
-        
-        self.cameraFocusView.addSubview(self.previewImageView)
-        self.previewImageView.isHidden = true
     }
     
     fileprivate func getDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
@@ -336,9 +330,7 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
             if let sampleBuffer = photoSampleBuffer, let previewBuffer = previewPhotoSampleBuffer, let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
                 
                 if let image = UIImage(data: dataImage) {
-                    self.previewImageView.isHidden = false
-                    self.previewImageView.contentMode = .scaleAspectFill
-                    self.previewImageView.image = image
+                   
                 }
             }
         }
@@ -366,7 +358,17 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     
     // MARK: EVOCameraFooterProtocol
     func galleryButtonPressed() {
+        let gallery = UIImagePickerController()
         
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+            print("Button capture")
+            
+            gallery.delegate = self
+            gallery.sourceType = .savedPhotosAlbum;
+            gallery.allowsEditing = false
+            
+            self.present(gallery, animated: true, completion: nil)
+        }
     }
     
     func captureButtonPressed() {
