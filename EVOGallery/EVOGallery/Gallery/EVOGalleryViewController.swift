@@ -136,7 +136,7 @@ class EVOGalleryViewController: UICollectionViewController {
 
     // MARK: UIScrollViewDelegate
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-            calculateCurrentIndex(with: scrollView)
+        calculateCurrentIndex(with: scrollView)
     }
 
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {

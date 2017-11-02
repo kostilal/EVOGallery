@@ -49,9 +49,7 @@ class DemoGalleryCollectionViewController: EVOGalleryViewController, HeaderViewD
     
     // MARK: FooterViewDelegate
     func footerView(_ footerView: FooterView, didPressEditButton button: UIButton) {
-        let cameraVC = EVOCameraViewController()
         
-        present(cameraVC, animated: true, completion: nil)
     }
     
     func footerView(_ footerView: FooterView, didPressDeleteButton button: UIButton) {

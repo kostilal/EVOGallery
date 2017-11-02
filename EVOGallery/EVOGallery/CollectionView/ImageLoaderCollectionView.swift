@@ -14,10 +14,9 @@ enum AddButtonPosition: Int {
 }
 
 protocol ImageLoaderCollectionViewDelegate: class {
-    //    func addImage()
-    //    func deleteImage()
-    //    func reloadImage()
-    //    func show(images: [ImageLoaderDTO]?)
+    func addImage()
+    func deleteImage()
+    func reloadImage()
     func selectItem(at index: Int)
 }
 
@@ -228,21 +227,23 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
     }
     
     func addImage() {
-        guard let image = UIImage(named: "test_0") else {
-            return
-        }
+//        guard let image = UIImage(named: "test_0") else {
+//            return
+//        }
+//
+//        let object = ImageLoaderDTO()
+//        object.status = .error
+//        object.image = image
+//
+//        if self.addButtonPosition == .first {
+//            self.objects.append(object)
+//        } else {
+//            self.objects.insert(object, at: 0)
+//        }
+//
+//        self.reloadData()
         
-        let object = ImageLoaderDTO()
-        object.status = .error
-        object.image = image
-        
-        if self.addButtonPosition == .first {
-            self.objects.append(object)
-        } else {
-            self.objects.insert(object, at: 0)
-        }
-        
-        self.reloadData()
+        imageLoaderDelegate?.addImage()
     }
 
     func deleteImage(_ object: ImageLoaderDTO) {

@@ -9,7 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ImageLoaderCollectionViewDelegate {
-    
     var datasource = [ImageLoaderDTO]()
     
     override func viewDidLoad() {
@@ -50,8 +49,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         
         let gallery = DemoGalleryCollectionViewController(with: images, selectedIndex: index, collectionViewLayout: nil)
-        
         present(gallery, animated: true, completion: nil)
+    }
+    
+    func addImage() {
+        let camera = EVOCameraViewController()
+        self.navigationController?.pushViewController(camera, animated: true)
+//        present(camera, animated: true, completion: nil)
+        
+    }
+    
+    func deleteImage() {
+        
+    }
+    
+    func reloadImage() {
+        
     }
 }
 

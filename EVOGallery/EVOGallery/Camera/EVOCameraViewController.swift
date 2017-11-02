@@ -49,13 +49,21 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     
     override func viewWillAppear(_ animated: Bool) {
         if self.setupState == .success {
-            self.startCaptureSession()
+            startCaptureSession()
+        }
+        
+        if let navigationController = self.navigationController {
+            navigationController.isNavigationBarHidden = true
+        }
+        
+        if let tabBarController = self.tabBarController {
+            tabBarController.tabBar.isHidden = true
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         if self.setupState == .success {
-            self.stopCaptureSession()
+            stopCaptureSession()
         }
     
         super.viewWillDisappear(animated)
@@ -223,6 +231,13 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     }
     
     // MARK: Actions
+    fileprivate func openCropController(with image: UIImage!) {
+        let cropController = EVOCroperViewController()
+        cropController.sourceImage = image
+        
+        self.navigationController?.pushViewController(cropController, animated: true)
+    }
+    
     fileprivate func startCaptureSession() {
         if (!self.captureSession!.isRunning) {
             self.captureSession!.startRunning()
@@ -304,23 +319,27 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
         if !photoSettings.availablePreviewPhotoPixelFormatTypes.isEmpty {
             photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoSettings.availablePreviewPhotoPixelFormatTypes.first!]
         }
-        self.captureOutput!.capturePhoto(with: photoSettings, delegate: self)
+        
+        guard let output = self.captureOutput else {
+            log(with: "No capture output")
+            return
+        }
+        
+        output.capturePhoto(with: photoSettings, delegate: self)
     }
     
-//    @available (iOS 11.0, *)
-//    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-//        let imageData = photo.fileDataRepresentation()
-//
-//        if let data = imageData as CFData? {
-//            let dataProvider = CGDataProvider(data: data)
-//            let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.absoluteColorimetric)
-//            let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
-//
-//            self.previewImageView.isHidden = false
-//            self.previewImageView.contentMode = .scaleAspectFill
-//            self.previewImageView.image = image
-//        }
-//    }
+    @available (iOS 11.0, *)
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        let imageData = photo.fileDataRepresentation()
+
+        if let data = imageData as CFData? {
+            let dataProvider = CGDataProvider(data: data)
+            let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.absoluteColorimetric)
+            let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
+            
+            openCropController(with: image)
+        }
+    }
 
     func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         
@@ -330,7 +349,7 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
             if let sampleBuffer = photoSampleBuffer, let previewBuffer = previewPhotoSampleBuffer, let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
                 
                 if let image = UIImage(data: dataImage) {
-                   
+                   openCropController(with: image)
                 }
             }
         }
@@ -338,8 +357,11 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     
     // MARK: EVOCameraHeaderProtocol
     func closeButtonPressed() {
-        stopCaptureSession()
-        dismiss(animated: true, completion: nil)
+        if let _ = self.navigationController {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     func flashButtonPressed() {
@@ -357,21 +379,30 @@ class EVOCameraViewController: UIViewController, EVOCameraFooterProtocol, EVOCam
     }
     
     // MARK: EVOCameraFooterProtocol
+    func captureButtonPressed() {
+        capturePhoto()
+    }
+    
     func galleryButtonPressed() {
         let gallery = UIImagePickerController()
         
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
-            print("Button capture")
-            
             gallery.delegate = self
             gallery.sourceType = .savedPhotosAlbum;
             gallery.allowsEditing = false
             
-            self.present(gallery, animated: true, completion: nil)
+            present(gallery, animated: true, completion: nil)
+        } else {
+            log(with: "Photos album is not available")
         }
     }
     
-    func captureButtonPressed() {
-        capturePhoto()
+    // MARK: UIImagePickerControllerDelegate
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+        picker.dismiss(animated: true) { [weak self] in
+            self?.openCropController(with: image)
+        }
     }
 }
