@@ -15,7 +15,7 @@ enum LoadingStatus: Int {
     case error
 }
 
-class ImageLoaderDTO: NSObject {
+class EVOCollectionDTO: NSObject {
     var status: LoadingStatus = .none
     var image: UIImage?
 }

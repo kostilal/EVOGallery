@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class EVOCameraOverlaysStyle: NSObject {
+final class EVOOverlaysStyle: NSObject {
     public var closeButtonImage: UIImage!
     public var switchButtonImage: UIImage!
     public var flashButtonImages: [String: UIImage]!
@@ -17,6 +17,10 @@ final class EVOCameraOverlaysStyle: NSObject {
     public var applyButtonImage: UIImage!
     public var rotateButtonImage: UIImage!
     public var cropButtonImage: UIImage!
+    public var gridButtonImage: UIImage!
+    public var deleteButtonImage: UIImage!
+    public var editButtonImage: UIImage!
+    public var shareButtonImage: UIImage!
     
     public var controlButtonsTintColor: UIColor!
     public var captureButtonTintColor: UIColor!
@@ -30,13 +34,21 @@ final class EVOCameraOverlaysStyle: NSObject {
     public var headerSize: CGSize!
     public var footerSize: CGSize!
     
+    public var croperLineWidth: CGFloat!
+    public var collectionCellHeightMargin: CGFloat!
+    public var buttonMargin: CGFloat!
+    
+    public var isCroperGridHidden: Bool!
+    
+    public var statusBarStyle: UIStatusBarStyle!
+    
     override init() {
         super.init()
         
         defaultSetups()
     }
     
-    fileprivate func defaultSetups() {
+    private func defaultSetups() {
         self.closeButtonImage = createImage(named: "back")
         self.switchButtonImage = createImage(named: "switch")
         self.galleryButtonImage = createImage(named: "gallery")
@@ -44,6 +56,10 @@ final class EVOCameraOverlaysStyle: NSObject {
         self.applyButtonImage = createImage(named: "apply")
         self.rotateButtonImage = createImage(named: "rotate")
         self.cropButtonImage = createImage(named: "crop")
+        self.gridButtonImage = createImage(named: "grid")
+        self.deleteButtonImage = createImage(named: "delete")
+        self.editButtonImage = createImage(named: "edit")
+        self.shareButtonImage = createImage(named: "share")
         self.flashButtonImages = [FlashState.auto.rawValue: createImage(named: "flash_auto"),
                                   FlashState.on.rawValue  : createImage(named: "flash_on"),
                                   FlashState.off.rawValue : createImage(named: "flash_off")]
@@ -59,9 +75,17 @@ final class EVOCameraOverlaysStyle: NSObject {
         self.captureButtonsSize = CGSize(width: 56, height: 56)
         self.headerSize = CGSize(width: UIScreen.main.bounds.size.width, height: 64)
         self.footerSize = CGSize(width: UIScreen.main.bounds.size.width, height: 79)
+        
+        self.croperLineWidth = 1.0
+        self.collectionCellHeightMargin = 20.0
+        self.buttonMargin = 8.0
+        
+        self.isCroperGridHidden = true
+        
+        self.statusBarStyle = .lightContent
     }
     
-    fileprivate func createImage(named: String) -> UIImage! {
+    private func createImage(named: String) -> UIImage! {
         guard let image = UIImage(named: named) else {
             return UIImage()
         }

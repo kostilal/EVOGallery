@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  Tulip
+
+  Created by Ruslan on 12/24/15.
+  Copyright © 2015 UAProm. All rights reserved.
+*/
+
+
+"common.ok" = "Ок";
+"common.settings" = "Настройки";
+"common.error" = "Ошибка";
+"common.error.notice" = "Что-то пошло не так.";
+
+"camera.device.error" = "Данный девайс не имеет камеры.";
+"camera.access.error" = "Камера недоступна, проверьте настройки доступа.";
+"gallery.access.error" = "Галерея недоступна, проверьте настройки доступа.";
+"gallery.delete.button.title" = "Удалить";
+"gallery.edit.button.title" = "Изменить";
+"gallery.title.text" = "Фото %d из %d";

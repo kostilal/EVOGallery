@@ -10,5 +10,5 @@ import UIKit
 
 class TestCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var collectionView: ImageLoaderCollectionView!
+    @IBOutlet weak var collectionView: EVOCollectionView!
 }

@@ -8,14 +8,14 @@
 
 import UIKit
 
-class DemoGalleryCollectionViewController: EVOGalleryViewController, HeaderViewDelegate, FooterViewDelegate, EVOGalleryViewControllerDelegate {
+class DemoGalleryCollectionViewController: EVOGalleryViewController, EVOGalleryViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.delegate = self
+        self.galeryDelegate = self
 
-        addView()
+//        addView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,57 +24,57 @@ class DemoGalleryCollectionViewController: EVOGalleryViewController, HeaderViewD
     
     // MARK: Setups
     
-    func addView() {
-        let header = HeaderView()
-        header.viewDelegate = self
-        self.headerView = header
-        
-        let footer = FooterView()
-        footer.viewDelegate = self
-        self.footerView = footer
-        
-        setupOverlays()
-    }
-    
-    // MARK: HeaderViewDelegate
-    func headerViewDidPressBackButton(_ headerView: HeaderView?) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func headerViewDidPressShareButton(_ headerView: HeaderView?) {
-        let image = self.dataSource[self.currentIndex]
-        
-        share(shareText: "YOBA", shareImage: image)
-    }
+//    func addView() {
+//        let header = EVOGalleryHeaderView()
+//        header.headerDelegate = self
+//        self.headerView = header
+//
+//        let footer = EVOGalleryFooterView()
+//        footer.footerDelegate = self
+//        self.footerView = footer
+//
+//        setupOverlays()
+//    }
+//
+//    // MARK: HeaderViewDelegate
+//    func headerViewDidPressBackButton(_ headerView: EVOGalleryHeaderView?) {
+//        self.dismiss(animated: true, completion: nil)
+//    }
+//
+//    func headerViewDidPressShareButton(_ headerView: EVOGalleryHeaderView?) {
+////        let image = self.dataSource[self.currentIndex]
+////
+////        share(shareText: "YOBA", shareImage: image)
+//    }
     
     // MARK: FooterViewDelegate
-    func footerView(_ footerView: FooterView, didPressEditButton button: UIButton) {
-        
-    }
-    
-    func footerView(_ footerView: FooterView, didPressDeleteButton button: UIButton) {
-        if self.currentIndex <= self.dataSource.count-1 {
-            self.dataSource.remove(at: self.currentIndex)
-        }
-        
-        if self.dataSource.isEmpty {
-            headerViewDidPressBackButton(nil)
-            
-            return
-        }
-        
-        self.scroll(to: 0)
-        
-        self.reloadData()
-    }
+//    func footerView(_ footerView: EVOGalleryFooterView, didPressEditButton button: UIButton) {
+//
+//    }
+//
+//    func footerView(_ footerView: EVOGalleryFooterView, didPressDeleteButton button: UIButton) {
+//        if self.currentIndex <= self.dataSource.count-1 {
+//            self.dataSource.remove(at: self.currentIndex)
+//        }
+//
+//        if self.dataSource.isEmpty {
+//            headerViewDidPressBackButton(nil)
+//
+//            return
+//        }
+//
+//        self.scroll(to: 0)
+//
+//        self.reloadData()
+//    }
     
     // MARK: EVOGalleryViewControllerDelegate
     func galleryDidChangeIndex(to index: Int, galleryViewController: EVOGalleryViewController) {
-        guard let header = galleryViewController.headerView as? HeaderView else {
-            return
-        }
+//        guard let header = galleryViewController.headerView else {
+//            return
+//        }
         
-        header.titleLabel.text = "Фото \(index+1) из \(self.dataSource.count)"
+//        header.titleLabel.text = String(format: "gallery.title.text", index+1, self.dataSource.count)
     }
     
     // MARK: Actions

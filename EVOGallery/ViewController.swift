@@ -8,15 +8,17 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ImageLoaderCollectionViewDelegate {
-    var datasource = [ImageLoaderDTO]()
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, EVOCollectionViewDelegate, EVOCameraViewControllerDelegate {
+    var datasource = [EVOCollectionDTO]()
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         for index in 0...5 {
             let image = UIImage(named: "test_\(index)")
-            let dto = ImageLoaderDTO()
+            let dto = EVOCollectionDTO()
             dto.image = image
             
             self.datasource.append(dto)
@@ -42,21 +44,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func selectItem(at index: Int) {
-        var images = [UIImage]()
-        
-        self.datasource.forEach { (dto) in
-            images.append(dto.image!)
-        }
-        
-        let gallery = DemoGalleryCollectionViewController(with: images, selectedIndex: index, collectionViewLayout: nil)
+
+        let gallery = DemoGalleryCollectionViewController(with: self.datasource, selectedIndex: index, collectionViewLayout: nil)
         present(gallery, animated: true, completion: nil)
     }
     
     func addImage() {
         let camera = EVOCameraViewController()
+        camera.cameraDelegate = self
         self.navigationController?.pushViewController(camera, animated: true)
-//        present(camera, animated: true, completion: nil)
-        
     }
     
     func deleteImage() {
@@ -64,6 +60,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func reloadImage() {
+        
+    }
+    
+    func cameraDidCapture(image: EVOCollectionDTO) {
+        self.datasource.append(image)
+        self.collectionView.reloadData()
+    }
+    
+    func cameraDidCanceled() {
         
     }
 }

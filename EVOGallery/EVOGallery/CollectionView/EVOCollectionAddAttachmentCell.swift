@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddAttachmentCollectionViewCell: ImageLoaderCollectionViewCell {
+class EVOCollectionAddAttachmentCell: EVOCollectionViewCell {
     fileprivate static let kImageViewSize = CGSize(width: 24, height: 24)
     fileprivate static let kBorderViewTopMargin = CGFloat(8)
     
@@ -51,14 +51,14 @@ class AddAttachmentCollectionViewCell: ImageLoaderCollectionViewCell {
         super.layoutSubviews()
         
         self.borderView.frame = CGRect(x: 0,
-                                       y: AddAttachmentCollectionViewCell.kBorderViewTopMargin,
-                                       width: self.contentView.frame.size.width - AddAttachmentCollectionViewCell.kBorderViewTopMargin,
-                                       height: self.contentView.frame.size.height - AddAttachmentCollectionViewCell.kBorderViewTopMargin)
+                                       y: EVOCollectionAddAttachmentCell.kBorderViewTopMargin,
+                                       width: self.contentView.frame.size.width - EVOCollectionAddAttachmentCell.kBorderViewTopMargin,
+                                       height: self.contentView.frame.size.height - EVOCollectionAddAttachmentCell.kBorderViewTopMargin)
         
-        self.imageView.frame = CGRect(x: self.contentView.frame.size.width/2 - AddAttachmentCollectionViewCell.kImageViewSize.width/2 - AddAttachmentCollectionViewCell.kBorderViewTopMargin/2,
-                                       y: self.contentView.frame.size.height/2 - AddAttachmentCollectionViewCell.kImageViewSize.height/2 + AddAttachmentCollectionViewCell.kBorderViewTopMargin/2,
-                                       width: AddAttachmentCollectionViewCell.kImageViewSize.width,
-                                       height: AddAttachmentCollectionViewCell.kImageViewSize.height)
+        self.imageView.frame = CGRect(x: self.contentView.frame.size.width/2 - EVOCollectionAddAttachmentCell.kImageViewSize.width/2 - EVOCollectionAddAttachmentCell.kBorderViewTopMargin/2,
+                                       y: self.contentView.frame.size.height/2 - EVOCollectionAddAttachmentCell.kImageViewSize.height/2 + EVOCollectionAddAttachmentCell.kBorderViewTopMargin/2,
+                                       width: EVOCollectionAddAttachmentCell.kImageViewSize.width,
+                                       height: EVOCollectionAddAttachmentCell.kImageViewSize.height)
     }
     
     // MARK: Setups

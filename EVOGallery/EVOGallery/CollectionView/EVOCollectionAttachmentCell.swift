@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AttachmentCollectionViewCell: ImageLoaderCollectionViewCell {
+class EVOCollectionAttachmentCell: EVOCollectionViewCell {
     fileprivate static let kImageViewTopMargin = CGFloat(8)
     fileprivate static let kDeleteButtonSize = CGSize(width: 30, height: 30)
     fileprivate static let kReloadButtonSize = CGSize(width: 30, height: 30)
@@ -70,22 +70,22 @@ class AttachmentCollectionViewCell: ImageLoaderCollectionViewCell {
         super.layoutSubviews()
         
         self.imageView.frame = CGRect(x: 0,
-                                 y: AttachmentCollectionViewCell.kImageViewTopMargin,
-                                 width: self.contentView.frame.size.width - AttachmentCollectionViewCell.kImageViewTopMargin,
-                                 height: self.contentView.frame.size.width - AttachmentCollectionViewCell.kImageViewTopMargin)
+                                 y: EVOCollectionAttachmentCell.kImageViewTopMargin,
+                                 width: self.contentView.frame.size.width - EVOCollectionAttachmentCell.kImageViewTopMargin,
+                                 height: self.contentView.frame.size.width - EVOCollectionAttachmentCell.kImageViewTopMargin)
         
-        self.deleteButton.frame = CGRect(x: self.contentView.frame.size.width - AttachmentCollectionViewCell.kDeleteButtonSize.width,
+        self.deleteButton.frame = CGRect(x: self.contentView.frame.size.width - EVOCollectionAttachmentCell.kDeleteButtonSize.width,
                                     y: 0,
-                                    width: AttachmentCollectionViewCell.kDeleteButtonSize.width,
-                                    height: AttachmentCollectionViewCell.kDeleteButtonSize.height)
+                                    width: EVOCollectionAttachmentCell.kDeleteButtonSize.width,
+                                    height: EVOCollectionAttachmentCell.kDeleteButtonSize.height)
         
-        self.reloadButton.frame = CGRect(x: self.contentView.frame.size.width/2 - AttachmentCollectionViewCell.kReloadButtonSize.width/2 - AttachmentCollectionViewCell.kImageViewTopMargin/2,
-                                    y: self.contentView.frame.size.height/2 - AttachmentCollectionViewCell.kReloadButtonSize.height/2 + AttachmentCollectionViewCell.kImageViewTopMargin/2,
-                                    width: AttachmentCollectionViewCell.kReloadButtonSize.width,
-                                    height: AttachmentCollectionViewCell.kReloadButtonSize.height)
+        self.reloadButton.frame = CGRect(x: self.contentView.frame.size.width/2 - EVOCollectionAttachmentCell.kReloadButtonSize.width/2 - EVOCollectionAttachmentCell.kImageViewTopMargin/2,
+                                    y: self.contentView.frame.size.height/2 - EVOCollectionAttachmentCell.kReloadButtonSize.height/2 + EVOCollectionAttachmentCell.kImageViewTopMargin/2,
+                                    width: EVOCollectionAttachmentCell.kReloadButtonSize.width,
+                                    height: EVOCollectionAttachmentCell.kReloadButtonSize.height)
         
-        self.activityIndicator.frame = CGRect(x: contentView.frame.size.width/2 - self.activityIndicator.frame.width/2 - AttachmentCollectionViewCell.kImageViewTopMargin/2,
-                                    y: self.contentView.frame.size.height/2 - self.activityIndicator.frame.height/2 + AttachmentCollectionViewCell.kImageViewTopMargin/2,
+        self.activityIndicator.frame = CGRect(x: contentView.frame.size.width/2 - self.activityIndicator.frame.width/2 - EVOCollectionAttachmentCell.kImageViewTopMargin/2,
+                                    y: self.contentView.frame.size.height/2 - self.activityIndicator.frame.height/2 + EVOCollectionAttachmentCell.kImageViewTopMargin/2,
                                     width: self.activityIndicator.frame.width,
                                     height: self.activityIndicator.frame.height)
         
@@ -102,7 +102,7 @@ class AttachmentCollectionViewCell: ImageLoaderCollectionViewCell {
         self.addSubview(self.activityIndicator)
     }
     
-    func set(object: ImageLoaderDTO, deleteCompletition: @escaping DeleteBlock, reloadCompletition: @escaping ReloadBlock) {
+    func set(object: EVOCollectionDTO, deleteCompletition: @escaping DeleteBlock, reloadCompletition: @escaping ReloadBlock) {
         self.object = object
         self.deleteCompletition = deleteCompletition
         self.reloadCompletition = reloadCompletition

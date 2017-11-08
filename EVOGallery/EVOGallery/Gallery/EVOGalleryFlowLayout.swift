@@ -21,7 +21,7 @@ class EVOGalleryFlowLayout: UICollectionViewFlowLayout {
         setup(with: UIScreen.main.bounds)
     }
     
-    func setup(with frame: CGRect) {
+    private func setup(with frame: CGRect) {
         self.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.itemSize = CGSize(width: frame.size.width, height: frame.size.height)
         self.scrollDirection = .horizontal

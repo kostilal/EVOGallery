@@ -14,12 +14,12 @@ enum CellType: Int {
     case created
 }
 
-typealias DeleteBlock = (_ contexts: ImageLoaderDTO?) -> Void
-typealias ReloadBlock = (_ contexts: ImageLoaderDTO?) -> Void
+typealias DeleteBlock = (_ contexts: EVOCollectionDTO?) -> Void
+typealias ReloadBlock = (_ contexts: EVOCollectionDTO?) -> Void
 
-class ImageLoaderCollectionViewCell: UICollectionViewCell {
+class EVOCollectionViewCell: UICollectionViewCell {
     public var cellType: CellType = .none
-    public var object: ImageLoaderDTO?
+    public var object: EVOCollectionDTO?
     public var deleteCompletition: DeleteBlock?
     public var reloadCompletition: ReloadBlock?
 }

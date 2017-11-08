@@ -87,7 +87,7 @@ open class EVOGalleryImageScrollView: UIScrollView {
         unwrappedZoomView.frame = frameToCenter
     }
     
-    fileprivate func prepareToResize() {
+    private func prepareToResize() {
         let boundsCenter = CGPoint(x: bounds.midX, y: bounds.midY)
         pointToCenterAfterResize = convert(boundsCenter, to: zoomView)
         
@@ -100,7 +100,7 @@ open class EVOGalleryImageScrollView: UIScrollView {
         }
     }
     
-    fileprivate func recoverFromResizing() {
+    private func recoverFromResizing() {
         setMaxMinZoomScalesForCurrentBounds()
         
         // restore zoom scale, first making sure it is within the allowable range.
@@ -128,11 +128,11 @@ open class EVOGalleryImageScrollView: UIScrollView {
         contentOffset = offset
     }
     
-    fileprivate func maximumContentOffset() -> CGPoint {
+    private func maximumContentOffset() -> CGPoint {
         return CGPoint(x: contentSize.width - bounds.width,y:contentSize.height - bounds.height)
     }
     
-    fileprivate func minimumContentOffset() -> CGPoint {
+    private func minimumContentOffset() -> CGPoint {
         return CGPoint.zero
     }
 
@@ -155,7 +155,7 @@ open class EVOGalleryImageScrollView: UIScrollView {
         configureImageForSize(image.size)
     }
     
-    fileprivate func configureImageForSize(_ size: CGSize) {
+    private func configureImageForSize(_ size: CGSize) {
         imageSize = size
         contentSize = imageSize
         setMaxMinZoomScalesForCurrentBounds()
@@ -163,7 +163,7 @@ open class EVOGalleryImageScrollView: UIScrollView {
         contentOffset = CGPoint.zero
     }
     
-    fileprivate func setMaxMinZoomScalesForCurrentBounds() {
+    private func setMaxMinZoomScalesForCurrentBounds() {
         // calculate min/max zoomscale
         let xScale = bounds.width / imageSize.width    // the scale needed to perfectly fit the image width-wise
         let yScale = bounds.height / imageSize.height   // the scale needed to perfectly fit the image height-wise
@@ -186,7 +186,7 @@ open class EVOGalleryImageScrollView: UIScrollView {
     
     // MARK: - Gesture
     
-    @objc func doubleTapGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+    @objc private func doubleTapGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
         // zoom out if it bigger than middle scale point. Else, zoom in
         if zoomScale >= maximumZoomScale / 2.0 {
             setZoomScale(minimumZoomScale, animated: true)
@@ -198,7 +198,7 @@ open class EVOGalleryImageScrollView: UIScrollView {
         }
     }
     
-    fileprivate func zoomRectForScale(_ scale: CGFloat, center: CGPoint) -> CGRect {
+    private func zoomRectForScale(_ scale: CGFloat, center: CGPoint) -> CGRect {
         var zoomRect = CGRect.zero
         
         // the zoom rect is in the content view's coordinates.
@@ -222,7 +222,7 @@ open class EVOGalleryImageScrollView: UIScrollView {
     
     // MARK: - Actions
     
-    @objc func changeOrientationNotification() {
+    @objc private func changeOrientationNotification() {
         configureImageForSize(imageSize)
     }
 }
@@ -236,5 +236,4 @@ extension EVOGalleryImageScrollView: UIScrollViewDelegate{
     public func scrollViewDidZoom(_ scrollView: UIScrollView) {
         adjustFrameToCenter()
     }
-    
 }

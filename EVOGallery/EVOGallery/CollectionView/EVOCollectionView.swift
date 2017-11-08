@@ -13,20 +13,19 @@ enum AddButtonPosition: Int {
     case last
 }
 
-protocol ImageLoaderCollectionViewDelegate: class {
+protocol EVOCollectionViewDelegate: class {
     func addImage()
     func deleteImage()
     func reloadImage()
     func selectItem(at index: Int)
 }
 
-class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    fileprivate static let kCellHeightMargin = CGFloat(20)
+class EVOCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    private var selectedCell: EVOCollectionViewCell?
+    private var objects = [EVOCollectionDTO]()
     
-    fileprivate var selectedCell: ImageLoaderCollectionViewCell?
-    fileprivate var objects = [ImageLoaderDTO]()
-    
-    public weak var imageLoaderDelegate: ImageLoaderCollectionViewDelegate?
+    public var overlaysStyle = EVOOverlaysStyle()
+    public weak var imageLoaderDelegate: EVOCollectionViewDelegate?
     public var addButtonPosition: AddButtonPosition = .first {
         didSet {
             sort(dataSource: self.objects, with: self.addButtonPosition)
@@ -49,14 +48,14 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
         super.init(coder: aDecoder)
     }
     
-    func set(objects: [ImageLoaderDTO]) {
+    func set(objects: [EVOCollectionDTO]) {
         sort(dataSource: objects, with: self.addButtonPosition)
     }
     
     // MARK: Setups
     func defaultSetup() {
-        self.register(AddAttachmentCollectionViewCell.self, forCellWithReuseIdentifier: "AddAttachmentCell")
-        self.register(AttachmentCollectionViewCell.self, forCellWithReuseIdentifier: "AttachmentCell")
+        self.register(EVOCollectionAddAttachmentCell.self, forCellWithReuseIdentifier: "EVOCollectionAddAttachmentCell")
+        self.register(EVOCollectionAttachmentCell.self, forCellWithReuseIdentifier: "EVOCollectionAttachmentCell")
         
         setupCollectionView()
         setupGestureRecognizer()
@@ -64,7 +63,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
     }
     
     func setupDataSource() {
-        self.objects.append(ImageLoaderDTO())
+        self.objects.append(EVOCollectionDTO())
     }
     
     func setupCollectionView() {
@@ -91,7 +90,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
                 return
             }
             
-            guard let cell = self.cellForItem(at: indexPath) as? ImageLoaderCollectionViewCell else {
+            guard let cell = self.cellForItem(at: indexPath) as? EVOCollectionViewCell else {
                 fatalError("Can't init cell ImageLoaderCollectionViewCell")
             }
             
@@ -111,7 +110,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
                 return
             }
             
-            guard let cell = self.cellForItem(at: indexPath) as? ImageLoaderCollectionViewCell else {
+            guard let cell = self.cellForItem(at: indexPath) as? EVOCollectionViewCell else {
                 fatalError("Can't init cell ImageLoaderCollectionViewCell")
             }
             
@@ -147,7 +146,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
         let addButtonIndex = self.addButtonPosition == .first ? 0 : self.objects.count - 1
         
         if indexPath.row == addButtonIndex {
-            guard let cell = self.dequeueReusableCell(withReuseIdentifier: "AddAttachmentCell", for: indexPath) as? AddAttachmentCollectionViewCell else {
+            guard let cell = self.dequeueReusableCell(withReuseIdentifier: "EVOCollectionAddAttachmentCell", for: indexPath) as? EVOCollectionAddAttachmentCell else {
                 fatalError("Can't init cell AddAttachmentCollectionViewCell")
             }
             
@@ -156,7 +155,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
             return cell
         }
         
-        guard let cell = self.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath) as? AttachmentCollectionViewCell else {
+        guard let cell = self.dequeueReusableCell(withReuseIdentifier: "EVOCollectionAttachmentCell", for: indexPath) as? EVOCollectionAttachmentCell else {
             fatalError("Can't init cell AttachmentCollectionViewCell")
         }
         
@@ -182,7 +181,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {}
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ImageLoaderCollectionViewCell else {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? EVOCollectionViewCell else {
             fatalError("Can't init cell AttachmentCollectionViewCell")
         }
         
@@ -203,14 +202,14 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
     
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.bounds.height - ImageLoaderCollectionView.kCellHeightMargin,
-                      height: self.bounds.height - ImageLoaderCollectionView.kCellHeightMargin)
+        return CGSize(width: self.bounds.height - self.overlaysStyle.collectionCellHeightMargin,
+                      height: self.bounds.height - self.overlaysStyle.collectionCellHeightMargin)
     }
     
     // MARK: Actions
-    func sort(dataSource: [ImageLoaderDTO], with addButtonPosition: AddButtonPosition) {
+    func sort(dataSource: [EVOCollectionDTO], with addButtonPosition: AddButtonPosition) {
         self.objects.removeAll()
-        self.objects.append(ImageLoaderDTO()) // Append ADD button
+        self.objects.append(EVOCollectionDTO()) // Append ADD button
         
         dataSource.forEach { (object) in
             switch addButtonPosition {
@@ -227,26 +226,10 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
     }
     
     func addImage() {
-//        guard let image = UIImage(named: "test_0") else {
-//            return
-//        }
-//
-//        let object = ImageLoaderDTO()
-//        object.status = .error
-//        object.image = image
-//
-//        if self.addButtonPosition == .first {
-//            self.objects.append(object)
-//        } else {
-//            self.objects.insert(object, at: 0)
-//        }
-//
-//        self.reloadData()
-        
         imageLoaderDelegate?.addImage()
     }
 
-    func deleteImage(_ object: ImageLoaderDTO) {
+    func deleteImage(_ object: EVOCollectionDTO) {
         guard let index = self.objects.index(of: object) else {
             return
         }
@@ -255,7 +238,7 @@ class ImageLoaderCollectionView: UICollectionView, UICollectionViewDelegate, UIC
         self.reloadData()
     }
     
-    func reloadImage(_ object: ImageLoaderDTO) {
+    func reloadImage(_ object: EVOCollectionDTO) {
         let findObject = self.objects.first{ $0 == object}
         
         guard let obj = findObject else {

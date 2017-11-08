@@ -9,9 +9,16 @@
 /* Begin PBXBuildFile section */
 		9514DDAD1FA1B858000DAE15 /* EVOCameraHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9514DDAC1FA1B858000DAE15 /* EVOCameraHeaderView.swift */; };
 		9514DDAF1FA1BD44000DAE15 /* EVOCameraFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9514DDAE1FA1BD44000DAE15 /* EVOCameraFooterView.swift */; };
-		9514DDB71FA20343000DAE15 /* EVOCameraOverlaysStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9514DDB61FA20343000DAE15 /* EVOCameraOverlaysStyle.swift */; };
 		95230E611FAB502F00DE3A98 /* EVOCroperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95230E601FAB502F00DE3A98 /* EVOCroperViewController.swift */; };
 		95230E651FAB516300DE3A98 /* EVOCroperRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95230E641FAB516300DE3A98 /* EVOCroperRectView.swift */; };
+		9545C7FF1FB1C80E004BEC78 /* EVOGalleryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9545C7FD1FB1C80E004BEC78 /* EVOGalleryHeaderView.swift */; };
+		9545C8001FB1C80E004BEC78 /* EVOGalleryFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9545C7FE1FB1C80E004BEC78 /* EVOGalleryFooterView.swift */; };
+		958688301FB0B394004AD58E /* EVOGalleryAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9586882E1FB0B394004AD58E /* EVOGalleryAssets.xcassets */; };
+		958688331FB0B3A3004AD58E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 958688311FB0B3A3004AD58E /* Localizable.strings */; };
+		9591A4301FB07CDC00434E89 /* EVOCroperHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9591A42F1FB07CDC00434E89 /* EVOCroperHeaderView.swift */; };
+		9591A4321FB07D0100434E89 /* EVOCroperFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9591A4311FB07D0100434E89 /* EVOCroperFooterView.swift */; };
+		959E9AB91FB1D5B400C36117 /* EVOOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959E9AB81FB1D5B400C36117 /* EVOOverlayView.swift */; };
+		959E9ABB1FB1DEA000C36117 /* EVOOverlaysStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959E9ABA1FB1DEA000C36117 /* EVOOverlaysStyle.swift */; };
 		95BA2D7D1F9F7BBE00F8BDBE /* EVOCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BA2D7C1F9F7BBE00F8BDBE /* EVOCameraViewController.swift */; };
 		95BA2D7F1FA0B85500F8BDBE /* EVOCameraFocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BA2D7E1FA0B85500F8BDBE /* EVOCameraFocusView.swift */; };
 		C46ACA391F9E677000F68451 /* EVOGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */; };
@@ -19,27 +26,31 @@
 		C46ACA3B1F9E677000F68451 /* EVOGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA381F9E677000F68451 /* EVOGalleryViewController.swift */; };
 		C46ACA3D1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA3C1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift */; };
 		C46ACA3F1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46ACA3E1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift */; };
-		C4D7000D1F9B620700EB06DA /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFFF1F9B620700EB06DA /* FooterView.swift */; };
-		C4D7000F1F9B620700EB06DA /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D700011F9B620700EB06DA /* HeaderView.swift */; };
 		C4D7001B1F9B788100EB06DA /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7001A1F9B788100EB06DA /* TestCollectionViewCell.swift */; };
 		C4D7FFD81F9B609D00EB06DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFD71F9B609D00EB06DA /* AppDelegate.swift */; };
 		C4D7FFDA1F9B609D00EB06DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFD91F9B609D00EB06DA /* ViewController.swift */; };
 		C4D7FFDD1F9B609D00EB06DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4D7FFDB1F9B609D00EB06DA /* Main.storyboard */; };
-		C4D7FFDF1F9B609D00EB06DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4D7FFDE1F9B609D00EB06DA /* Assets.xcassets */; };
 		C4D7FFE21F9B609D00EB06DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4D7FFE01F9B609D00EB06DA /* LaunchScreen.storyboard */; };
-		C4D7FFF91F9B61B400EB06DA /* ImageLoaderDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF31F9B61B400EB06DA /* ImageLoaderDTO.swift */; };
-		C4D7FFFA1F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF41F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift */; };
-		C4D7FFFC1F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF61F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift */; };
-		C4D7FFFD1F9B61B400EB06DA /* ImageLoaderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF71F9B61B400EB06DA /* ImageLoaderCollectionView.swift */; };
-		C4D7FFFE1F9B61B400EB06DA /* AttachmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF81F9B61B400EB06DA /* AttachmentCollectionViewCell.swift */; };
+		C4D7FFF91F9B61B400EB06DA /* EVOCollectionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF31F9B61B400EB06DA /* EVOCollectionDTO.swift */; };
+		C4D7FFFA1F9B61B400EB06DA /* EVOCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF41F9B61B400EB06DA /* EVOCollectionViewCell.swift */; };
+		C4D7FFFC1F9B61B400EB06DA /* EVOCollectionAddAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF61F9B61B400EB06DA /* EVOCollectionAddAttachmentCell.swift */; };
+		C4D7FFFD1F9B61B400EB06DA /* EVOCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF71F9B61B400EB06DA /* EVOCollectionView.swift */; };
+		C4D7FFFE1F9B61B400EB06DA /* EVOCollectionAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D7FFF81F9B61B400EB06DA /* EVOCollectionAttachmentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9514DDAC1FA1B858000DAE15 /* EVOCameraHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCameraHeaderView.swift; sourceTree = "<group>"; };
 		9514DDAE1FA1BD44000DAE15 /* EVOCameraFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCameraFooterView.swift; sourceTree = "<group>"; };
-		9514DDB61FA20343000DAE15 /* EVOCameraOverlaysStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCameraOverlaysStyle.swift; sourceTree = "<group>"; };
 		95230E601FAB502F00DE3A98 /* EVOCroperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOCroperViewController.swift; sourceTree = "<group>"; };
 		95230E641FAB516300DE3A98 /* EVOCroperRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCroperRectView.swift; sourceTree = "<group>"; };
+		9545C7FD1FB1C80E004BEC78 /* EVOGalleryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryHeaderView.swift; sourceTree = "<group>"; };
+		9545C7FE1FB1C80E004BEC78 /* EVOGalleryFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryFooterView.swift; sourceTree = "<group>"; };
+		9586882E1FB0B394004AD58E /* EVOGalleryAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = EVOGalleryAssets.xcassets; sourceTree = "<group>"; };
+		958688321FB0B3A3004AD58E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9591A42F1FB07CDC00434E89 /* EVOCroperHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCroperHeaderView.swift; sourceTree = "<group>"; };
+		9591A4311FB07D0100434E89 /* EVOCroperFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCroperFooterView.swift; sourceTree = "<group>"; };
+		959E9AB81FB1D5B400C36117 /* EVOOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOOverlayView.swift; sourceTree = "<group>"; };
+		959E9ABA1FB1DEA000C36117 /* EVOOverlaysStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOOverlaysStyle.swift; sourceTree = "<group>"; };
 		95BA2D7C1F9F7BBE00F8BDBE /* EVOCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCameraViewController.swift; sourceTree = "<group>"; };
 		95BA2D7E1FA0B85500F8BDBE /* EVOCameraFocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOCameraFocusView.swift; sourceTree = "<group>"; };
 		C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -47,21 +58,18 @@
 		C46ACA381F9E677000F68451 /* EVOGalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryViewController.swift; sourceTree = "<group>"; };
 		C46ACA3C1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOGalleryImageScrollView.swift; sourceTree = "<group>"; };
 		C46ACA3E1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoGalleryCollectionViewController.swift; sourceTree = "<group>"; };
-		C4D700011F9B620700EB06DA /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C4D7001A1F9B788100EB06DA /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
 		C4D7FFD41F9B609D00EB06DA /* EVOGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EVOGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D7FFD71F9B609D00EB06DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4D7FFD91F9B609D00EB06DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C4D7FFDC1F9B609D00EB06DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C4D7FFDE1F9B609D00EB06DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4D7FFE11F9B609D00EB06DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4D7FFE31F9B609D00EB06DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C4D7FFF31F9B61B400EB06DA /* ImageLoaderDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoaderDTO.swift; sourceTree = "<group>"; };
-		C4D7FFF41F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoaderCollectionViewCell.swift; sourceTree = "<group>"; };
-		C4D7FFF61F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAttachmentCollectionViewCell.swift; sourceTree = "<group>"; };
-		C4D7FFF71F9B61B400EB06DA /* ImageLoaderCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoaderCollectionView.swift; sourceTree = "<group>"; };
-		C4D7FFF81F9B61B400EB06DA /* AttachmentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentCollectionViewCell.swift; sourceTree = "<group>"; };
-		C4D7FFFF1F9B620700EB06DA /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		C4D7FFF31F9B61B400EB06DA /* EVOCollectionDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOCollectionDTO.swift; sourceTree = "<group>"; };
+		C4D7FFF41F9B61B400EB06DA /* EVOCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOCollectionViewCell.swift; sourceTree = "<group>"; };
+		C4D7FFF61F9B61B400EB06DA /* EVOCollectionAddAttachmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOCollectionAddAttachmentCell.swift; sourceTree = "<group>"; };
+		C4D7FFF71F9B61B400EB06DA /* EVOCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOCollectionView.swift; sourceTree = "<group>"; };
+		C4D7FFF81F9B61B400EB06DA /* EVOCollectionAttachmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOCollectionAttachmentCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +88,28 @@
 			children = (
 				95230E601FAB502F00DE3A98 /* EVOCroperViewController.swift */,
 				95230E641FAB516300DE3A98 /* EVOCroperRectView.swift */,
+				9591A42F1FB07CDC00434E89 /* EVOCroperHeaderView.swift */,
+				9591A4311FB07D0100434E89 /* EVOCroperFooterView.swift */,
 			);
 			path = Cropper;
+			sourceTree = "<group>";
+		};
+		958688281FB0B290004AD58E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				958688311FB0B3A3004AD58E /* Localizable.strings */,
+				9586882E1FB0B394004AD58E /* EVOGalleryAssets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		959E9AB71FB1D59A00C36117 /* RootClasses */ = {
+			isa = PBXGroup;
+			children = (
+				959E9ABA1FB1DEA000C36117 /* EVOOverlaysStyle.swift */,
+				959E9AB81FB1D5B400C36117 /* EVOOverlayView.swift */,
+			);
+			path = RootClasses;
 			sourceTree = "<group>";
 		};
 		95BA2D7B1F9F7BA800F8BDBE /* Camera */ = {
@@ -91,7 +119,6 @@
 				95BA2D7E1FA0B85500F8BDBE /* EVOCameraFocusView.swift */,
 				9514DDAC1FA1B858000DAE15 /* EVOCameraHeaderView.swift */,
 				9514DDAE1FA1BD44000DAE15 /* EVOCameraFooterView.swift */,
-				9514DDB61FA20343000DAE15 /* EVOCameraOverlaysStyle.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -117,11 +144,8 @@
 			children = (
 				C4D7FFEF1F9B618F00EB06DA /* EVOGallery */,
 				C4D7FFD71F9B609D00EB06DA /* AppDelegate.swift */,
-				C4D7FFFF1F9B620700EB06DA /* FooterView.swift */,
-				C4D700011F9B620700EB06DA /* HeaderView.swift */,
 				C4D7FFD91F9B609D00EB06DA /* ViewController.swift */,
 				C4D7FFDB1F9B609D00EB06DA /* Main.storyboard */,
-				C4D7FFDE1F9B609D00EB06DA /* Assets.xcassets */,
 				C4D7FFE01F9B609D00EB06DA /* LaunchScreen.storyboard */,
 				C4D7FFE31F9B609D00EB06DA /* Info.plist */,
 				C4D7001A1F9B788100EB06DA /* TestCollectionViewCell.swift */,
@@ -133,6 +157,8 @@
 		C4D7FFEF1F9B618F00EB06DA /* EVOGallery */ = {
 			isa = PBXGroup;
 			children = (
+				959E9AB71FB1D59A00C36117 /* RootClasses */,
+				958688281FB0B290004AD58E /* Resources */,
 				95230E5F1FAB502F00DE3A98 /* Cropper */,
 				95BA2D7B1F9F7BA800F8BDBE /* Camera */,
 				C4D7FFF01F9B618F00EB06DA /* CollectionView */,
@@ -144,11 +170,11 @@
 		C4D7FFF01F9B618F00EB06DA /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				C4D7FFF61F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift */,
-				C4D7FFF81F9B61B400EB06DA /* AttachmentCollectionViewCell.swift */,
-				C4D7FFF71F9B61B400EB06DA /* ImageLoaderCollectionView.swift */,
-				C4D7FFF41F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift */,
-				C4D7FFF31F9B61B400EB06DA /* ImageLoaderDTO.swift */,
+				C4D7FFF61F9B61B400EB06DA /* EVOCollectionAddAttachmentCell.swift */,
+				C4D7FFF81F9B61B400EB06DA /* EVOCollectionAttachmentCell.swift */,
+				C4D7FFF71F9B61B400EB06DA /* EVOCollectionView.swift */,
+				C4D7FFF41F9B61B400EB06DA /* EVOCollectionViewCell.swift */,
+				C4D7FFF31F9B61B400EB06DA /* EVOCollectionDTO.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -156,6 +182,8 @@
 		C4D7FFF21F9B618F00EB06DA /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				9545C7FE1FB1C80E004BEC78 /* EVOGalleryFooterView.swift */,
+				9545C7FD1FB1C80E004BEC78 /* EVOGalleryHeaderView.swift */,
 				C46ACA3C1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift */,
 				C46ACA361F9E677000F68451 /* EVOGalleryCollectionViewCell.swift */,
 				C46ACA371F9E677000F68451 /* EVOGalleryFlowLayout.swift */,
@@ -224,7 +252,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D7FFE21F9B609D00EB06DA /* LaunchScreen.storyboard in Resources */,
-				C4D7FFDF1F9B609D00EB06DA /* Assets.xcassets in Resources */,
+				958688331FB0B3A3004AD58E /* Localizable.strings in Resources */,
+				958688301FB0B394004AD58E /* EVOGalleryAssets.xcassets in Resources */,
 				C4D7FFDD1F9B609D00EB06DA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,33 +266,44 @@
 			buildActionMask = 2147483647;
 			files = (
 				9514DDAF1FA1BD44000DAE15 /* EVOCameraFooterView.swift in Sources */,
+				9545C8001FB1C80E004BEC78 /* EVOGalleryFooterView.swift in Sources */,
 				95BA2D7F1FA0B85500F8BDBE /* EVOCameraFocusView.swift in Sources */,
-				C4D7FFF91F9B61B400EB06DA /* ImageLoaderDTO.swift in Sources */,
+				C4D7FFF91F9B61B400EB06DA /* EVOCollectionDTO.swift in Sources */,
+				959E9AB91FB1D5B400C36117 /* EVOOverlayView.swift in Sources */,
 				9514DDAD1FA1B858000DAE15 /* EVOCameraHeaderView.swift in Sources */,
-				9514DDB71FA20343000DAE15 /* EVOCameraOverlaysStyle.swift in Sources */,
+				9591A4321FB07D0100434E89 /* EVOCroperFooterView.swift in Sources */,
 				C46ACA3D1F9E6BCB00F68451 /* EVOGalleryImageScrollView.swift in Sources */,
 				C4D7001B1F9B788100EB06DA /* TestCollectionViewCell.swift in Sources */,
 				C46ACA391F9E677000F68451 /* EVOGalleryCollectionViewCell.swift in Sources */,
-				C4D7FFFE1F9B61B400EB06DA /* AttachmentCollectionViewCell.swift in Sources */,
+				9591A4301FB07CDC00434E89 /* EVOCroperHeaderView.swift in Sources */,
+				9545C7FF1FB1C80E004BEC78 /* EVOGalleryHeaderView.swift in Sources */,
+				C4D7FFFE1F9B61B400EB06DA /* EVOCollectionAttachmentCell.swift in Sources */,
 				C4D7FFDA1F9B609D00EB06DA /* ViewController.swift in Sources */,
 				95230E611FAB502F00DE3A98 /* EVOCroperViewController.swift in Sources */,
 				C46ACA3A1F9E677000F68451 /* EVOGalleryFlowLayout.swift in Sources */,
 				C46ACA3B1F9E677000F68451 /* EVOGalleryViewController.swift in Sources */,
-				C4D7000D1F9B620700EB06DA /* FooterView.swift in Sources */,
 				95230E651FAB516300DE3A98 /* EVOCroperRectView.swift in Sources */,
-				C4D7FFFD1F9B61B400EB06DA /* ImageLoaderCollectionView.swift in Sources */,
+				C4D7FFFD1F9B61B400EB06DA /* EVOCollectionView.swift in Sources */,
 				95BA2D7D1F9F7BBE00F8BDBE /* EVOCameraViewController.swift in Sources */,
 				C46ACA3F1F9E7A1100F68451 /* DemoGalleryCollectionViewController.swift in Sources */,
 				C4D7FFD81F9B609D00EB06DA /* AppDelegate.swift in Sources */,
-				C4D7FFFC1F9B61B400EB06DA /* AddAttachmentCollectionViewCell.swift in Sources */,
-				C4D7000F1F9B620700EB06DA /* HeaderView.swift in Sources */,
-				C4D7FFFA1F9B61B400EB06DA /* ImageLoaderCollectionViewCell.swift in Sources */,
+				C4D7FFFC1F9B61B400EB06DA /* EVOCollectionAddAttachmentCell.swift in Sources */,
+				C4D7FFFA1F9B61B400EB06DA /* EVOCollectionViewCell.swift in Sources */,
+				959E9ABB1FB1DEA000C36117 /* EVOOverlaysStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		958688311FB0B3A3004AD58E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				958688321FB0B3A3004AD58E /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		C4D7FFDB1F9B609D00EB06DA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -393,7 +433,6 @@
 		C4D7FFE71F9B609D00EB06DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 29HPKUAB44;
 				INFOPLIST_FILE = EVOGallery/Info.plist;
@@ -408,7 +447,6 @@
 		C4D7FFE81F9B609D00EB06DA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 29HPKUAB44;
 				INFOPLIST_FILE = EVOGallery/Info.plist;

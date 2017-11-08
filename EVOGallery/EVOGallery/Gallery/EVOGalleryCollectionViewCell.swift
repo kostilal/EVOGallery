@@ -23,7 +23,7 @@ class EVOGalleryCollectionViewCell: UICollectionViewCell {
         setupScrollView()
     }
     
-    fileprivate func setupScrollView() {
+    private func setupScrollView() {
         self.scrollView = EVOGalleryImageScrollView(frame: self.contentView.frame)
         
         guard let scrollView = self.scrollView else {
@@ -33,7 +33,11 @@ class EVOGalleryCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(scrollView)
     }
     
-    public func set(image: UIImage) {
+    public func set(image: EVOCollectionDTO) {
+        guard let image = image.image else {
+            return
+        }
+        
         self.scrollView?.display(image: image)
     }
 }

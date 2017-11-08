@@ -12,19 +12,16 @@ protocol EVOGalleryViewControllerDelegate: class {
     func galleryDidChangeIndex(to index: Int, galleryViewController: EVOGalleryViewController)
 }
 
-private let reuseIdentifier = "EVOGalleryCollectionViewCell"
+class EVOGalleryViewController: UICollectionViewController, EVOGalleryHeaderDelegate, EVOGalleryFooterDelegate, EVOCroperViewControllerDelegate {
 
-class EVOGalleryViewController: UICollectionViewController {
-    public var headerHeight = CGFloat(64)
-    public var footerHeight = CGFloat(50)
-    
+    public var overlaysStyle = EVOOverlaysStyle()
+    public var headerView: EVOGalleryHeaderView?
+    public var footerView: EVOGalleryFooterView?
+    public var dataSource = [EVOCollectionDTO]()
+    public weak var galeryDelegate: EVOGalleryViewControllerDelegate?
     public var currentIndex = 0
-    public var dataSource = [UIImage]()
-    public var headerView: UIView?
-    public var footerView: UIView?
-    public weak var delegate: EVOGalleryViewControllerDelegate?
     
-    required init(with dataSource: [UIImage], selectedIndex: Int, collectionViewLayout: UICollectionViewFlowLayout?) {
+    required init(with dataSource: [EVOCollectionDTO], selectedIndex: Int, collectionViewLayout: UICollectionViewFlowLayout?) {
         var layout: UICollectionViewFlowLayout
         
         if let collectionViewLayout = collectionViewLayout {
@@ -45,7 +42,7 @@ class EVOGalleryViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView!.register(EVOGalleryCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(EVOGalleryCollectionViewCell.self, forCellWithReuseIdentifier: "EVOGalleryCollectionViewCell")
         self.collectionView?.isPagingEnabled = true
         
         setupOverlays()
@@ -58,15 +55,15 @@ class EVOGalleryViewController: UICollectionViewController {
         if let header = self.headerView {
             header.frame = CGRect(x: 0,
                                   y: 0,
-                                  width: self.view.frame.size.width,
-                                  height: self.headerHeight)
+                                  width: self.overlaysStyle.headerSize.width,
+                                  height: self.overlaysStyle.headerSize.height)
         }
         
         if let footer = self.footerView {
             footer.frame = CGRect(x: 0,
-                                  y: self.view.frame.size.height - self.footerHeight,
-                                  width: self.view.frame.size.width,
-                                  height: self.footerHeight)
+                                  y: self.view.frame.size.height - self.overlaysStyle.footerSize.height,
+                                  width: self.overlaysStyle.footerSize.width,
+                                  height: self.overlaysStyle.footerSize.height)
         }
     }
     
@@ -80,15 +77,22 @@ class EVOGalleryViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.overlaysStyle.statusBarStyle
+    }
+    
     // MARK: Setups
     public func setupOverlays() {
-        if let header = self.headerView {
-            self.view.addSubview(header)
-        }
+        self.overlaysStyle.footerSize = CGSize(width: self.overlaysStyle.footerSize.width, height: 50)
+        self.overlaysStyle.footerBackgroundColor = self.overlaysStyle.focusRectColor
         
-        if let footer = self.footerView {
-            self.view.addSubview(footer)
-        }
+        self.headerView = EVOGalleryHeaderView(with: self.overlaysStyle)
+        self.headerView?.headerDelegate = self
+        self.view.addSubview(self.headerView!)
+        
+        self.footerView = EVOGalleryFooterView(with: self.overlaysStyle)
+        self.footerView?.footerDelegate = self
+        self.view.addSubview(self.footerView!)
     }
     
     // MARK: Actions
@@ -100,10 +104,10 @@ class EVOGalleryViewController: UICollectionViewController {
     
     public func reloadData() {
         self.collectionView?.reloadData()
-        self.delegate?.galleryDidChangeIndex(to: self.currentIndex, galleryViewController: self)
+        galleryDidChangeIndex()
     }
     
-    fileprivate func calculateCurrentIndex(with scrollView: UIScrollView) {
+    private func calculateCurrentIndex(with scrollView: UIScrollView) {
         var visibleRect = CGRect()
         visibleRect.origin = collectionView!.contentOffset
         visibleRect.size = collectionView!.bounds.size
@@ -112,7 +116,50 @@ class EVOGalleryViewController: UICollectionViewController {
         let visibleIndexPath: IndexPath = collectionView!.indexPathForItem(at: visiblePoint)!
         
         self.currentIndex = visibleIndexPath.row
-        self.delegate?.galleryDidChangeIndex(to: self.currentIndex, galleryViewController: self)
+        
+        galleryDidChangeIndex()
+    }
+    
+    private func close(animated: Bool) {
+        if let _ = self.navigationController {
+            self.navigationController?.popViewController(animated: animated)
+        } else {
+            dismiss(animated: animated, completion: nil)
+        }
+    }
+    
+    private func galleryDidChangeIndex() {
+        if let header = self.headerView {
+            header.titleLabel.text = String(format: NSLocalizedString("gallery.title.text", comment: ""), self.currentIndex+1, self.dataSource.count)
+        }
+        
+        self.galeryDelegate?.galleryDidChangeIndex(to: self.currentIndex, galleryViewController: self)
+    }
+    
+    private func openCropController() {
+        let cropController = EVOCroperViewController()
+        cropController.sourceImage = self.dataSource[self.currentIndex]
+        cropController.croperDelegate = self
+        
+        if let navController = self.navigationController {
+            navController.pushViewController(cropController, animated: false)
+        } else {
+            present(cropController, animated: false, completion: nil)
+        }
+    }
+    
+    private func shareImage(image: EVOCollectionDTO) {
+        if let image = image.image {
+            let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            present(activityViewController, animated: true, completion: nil)
+        } else {
+            log(with: "Nothing to share")
+        }
+    }
+    
+    private func log(with text: String) {
+        print(text)
     }
     
     // MARK: UICollectionViewDataSource
@@ -125,7 +172,7 @@ class EVOGalleryViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? EVOGalleryCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EVOGalleryCollectionViewCell", for: indexPath) as? EVOGalleryCollectionViewCell else {
             fatalError("Can't init EVOGalleryCollectionViewCell")
         }
     
@@ -141,5 +188,34 @@ class EVOGalleryViewController: UICollectionViewController {
 
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         calculateCurrentIndex(with: scrollView)
+    }
+    
+    // MARK: EVOGalleryHeaderView
+    func closeButtonPressed() {
+        close(animated: true)
+    }
+    
+    func shareButtonPressed() {
+        shareImage(image: self.dataSource[self.currentIndex])
+    }
+
+    // MARK: EVOGalleryFooterView
+    func editButtonPressed() {
+        openCropController()
+    }
+    
+    func deleteButtonPressed() {
+        
+    }
+    
+    //MARK: EVOCroperViewControllerDelegate
+    func croperDidCrop(image: EVOCollectionDTO) {
+        self.dataSource[self.currentIndex] = image
+        
+        self.reloadData()
+    }
+    
+    func croperDidCanceled() {
+        
     }
 }
